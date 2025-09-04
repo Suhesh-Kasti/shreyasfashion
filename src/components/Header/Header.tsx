@@ -8,7 +8,8 @@ import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import SearchBar from "./SearchBar";
-import { getBrandName, getNavigation } from "@/config/brand";
+import { getBrandName, getNavigation, BRAND_CONFIG } from "@/config/brand";
+import TypingAnimation from "../Common/TypingAnimation";
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
@@ -50,7 +51,20 @@ const Header = () => {
           {/* Logo */}
           <Link className="flex-shrink-0" href="/">
             <div className="text-2xl lg:text-3xl font-bold text-brand-black tracking-tight">
-              {getBrandName()}
+              {/* Desktop: Show full brand name */}
+              <span className="hidden sm:block">
+                {getBrandName()}
+              </span>
+              {/* Mobile: Show typing animation */}
+              <span className="block sm:hidden">
+                <TypingAnimation
+                  words={BRAND_CONFIG.typingWords}
+                  className="text-2xl font-bold text-brand-black tracking-tight"
+                  typingSpeed={120}
+                  deletingSpeed={80}
+                  pauseDuration={1500}
+                />
+              </span>
             </div>
           </Link>
 

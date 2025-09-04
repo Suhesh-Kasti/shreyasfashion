@@ -4,6 +4,8 @@
 export const BRAND_CONFIG = {
   // Basic Brand Info
   name: "Shreya's Fashion",
+  // Typing animation words for mobile navbar (you can add/remove words here)
+  typingWords: ["Shreya's", "Fashion", "Style", "Nepal"],
   tagline: "Premium streetwear crafted in Nepal",
   description: "Premium streetwear crafted in Nepal by Shreya Ghimire. Quality clothing that celebrates heritage while embracing modernity.",
   
@@ -111,6 +113,9 @@ export const BRAND_CONFIG = {
 
 // Helper function to get brand name
 export const getBrandName = () => BRAND_CONFIG.name;
+
+// Helper function to get typing animation words
+export const getTypingWords = () => BRAND_CONFIG.typingWords;
 
 // Helper function to get full brand title
 export const getBrandTitle = (suffix?: string) => {
