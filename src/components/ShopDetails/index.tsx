@@ -122,7 +122,7 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h2>
-          <p className="text-gray-600 mb-8">The product you're looking for doesn't exist.</p>
+          <p className="text-gray-600 mb-8">The product you&apos;re looking for doesn&apos;t exist.</p>
           <Link
             href="/shop-with-sidebar"
             className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition-colors"
