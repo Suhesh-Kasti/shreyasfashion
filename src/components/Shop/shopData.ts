@@ -1,0 +1,156 @@
+import { Product } from "@/types/product";
+const shopData: Product[] = [
+  {
+    title: "Premium Cargo Pants",
+    reviews: 24,
+    price: 89.0,
+    discountedPrice: 69.0,
+    id: 1,
+    category: "Pants",
+    description: "Premium cargo pants with multiple pockets and relaxed fit",
+    material: "100% Cotton",
+    gender: "Unisex",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Black", "Olive", "Khaki"],
+    inStock: true,
+    featured: true,
+    imgs: {
+      thumbnails: [
+        "/images/products/product-1-sm-1.png",
+        "/images/products/product-1-sm-2.png",
+      ],
+      previews: [
+        "/images/products/product-1-bg-1.png",
+        "/images/products/product-1-bg-2.png",
+      ],
+    },
+  },
+  {
+    title: "Classic Denim Jeans",
+    reviews: 18,
+    price: 79.0,
+    discountedPrice: 59.0,
+    id: 2,
+    category: "Jeans",
+    description: "Timeless denim jeans with perfect fit and premium quality",
+    material: "98% Cotton, 2% Elastane",
+    gender: "Unisex",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Blue", "Black", "Light Blue"],
+    inStock: true,
+    featured: true,
+    imgs: {
+      thumbnails: [
+        "/images/products/product-2-sm-1.png",
+        "/images/products/product-2-sm-2.png",
+      ],
+      previews: [
+        "/images/products/product-2-bg-1.png",
+        "/images/products/product-2-bg-2.png",
+      ],
+    },
+  },
+  {
+    title: "Oversized Sweatshirt",
+    reviews: 31,
+    price: 65.0,
+    discountedPrice: 49.0,
+    id: 3,
+    category: "Sweatshirts",
+    description: "Comfort meets style in our premium oversized sweatshirt",
+    material: "80% Cotton, 20% Polyester",
+    gender: "Unisex",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Gray", "Black", "Navy"],
+    inStock: true,
+    featured: true,
+    imgs: {
+      thumbnails: [
+        "/images/products/product-3-sm-1.png",
+        "/images/products/product-3-sm-2.png",
+      ],
+      previews: [
+        "/images/products/product-3-bg-1.png",
+        "/images/products/product-3-bg-2.png",
+      ],
+    },
+  },
+  {
+    title: "Essential T-Shirt",
+    reviews: 42,
+    price: 29.0,
+    discountedPrice: 19.0,
+    id: 4,
+    category: "T-Shirts",
+    description: "Essential tee crafted from finest materials for everyday comfort",
+    material: "100% Organic Cotton",
+    gender: "Unisex",
+    sizes: ["XS", "S", "M", "L", "XL"],
+    colors: ["White", "Black", "Gray", "Navy"],
+    inStock: true,
+    featured: true,
+    imgs: {
+      thumbnails: [
+        "/images/products/product-4-sm-1.png",
+        "/images/products/product-4-sm-2.png",
+      ],
+      previews: [
+        "/images/products/product-4-bg-1.png",
+        "/images/products/product-4-bg-2.png",
+      ],
+    },
+  },
+  {
+    title: "Slim Fit Chinos",
+    reviews: 27,
+    price: 69.0,
+    discountedPrice: 55.0,
+    id: 5,
+    category: "Pants",
+    description: "Versatile chinos perfect for both casual and formal occasions",
+    material: "97% Cotton, 3% Elastane",
+    gender: "Men",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Khaki", "Navy", "Black", "Olive"],
+    inStock: true,
+    featured: false,
+    imgs: {
+      thumbnails: [
+        "/images/products/product-5-sm-1.png",
+        "/images/products/product-5-sm-2.png",
+      ],
+      previews: [
+        "/images/products/product-5-bg-1.png",
+        "/images/products/product-5-bg-2.png",
+      ],
+    },
+  },
+  {
+    title: "Hoodie Pullover",
+    reviews: 35,
+    price: 75.0,
+    discountedPrice: 59.0,
+    id: 6,
+    category: "Hoodies",
+    description: "Warm and stylish hooded pullover for cold weather comfort",
+    material: "85% Cotton, 15% Polyester",
+    gender: "Unisex",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Black", "Gray", "Navy", "Burgundy"],
+    inStock: true,
+    featured: true,
+    imgs: {
+      thumbnails: [
+        "/images/products/product-6-sm-1.png",
+        "/images/products/product-6-sm-2.png",
+      ],
+      previews: [
+        "/images/products/product-6-bg-1.png",
+        "/images/products/product-6-bg-2.png",
+      ],
+    },
+  },
+
+];
+
+export default shopData;
