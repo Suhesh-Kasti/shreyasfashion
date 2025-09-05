@@ -285,46 +285,22 @@ export const structure: StructureResolver = (S) =>
             .items([
               S.listItem()
                 .title('Add New Product')
-                .child(
-                  S.document()
-                    .schemaType('product')
-                    .documentId('drafts.')
-                ),
+                .child(S.documentTypeList('product').title('Products')),
               S.listItem()
                 .title('Add New Category')
-                .child(
-                  S.document()
-                    .schemaType('category')
-                    .documentId('drafts.')
-                ),
+                .child(S.documentTypeList('category').title('Categories')),
               S.listItem()
                 .title('Create Blog Post')
-                .child(
-                  S.document()
-                    .schemaType('blog')
-                    .documentId('drafts.')
-                ),
+                .child(S.documentTypeList('blog').title('Blog Posts')),
               S.listItem()
                 .title('Create Promotion')
-                .child(
-                  S.document()
-                    .schemaType('promotion')
-                    .documentId('drafts.')
-                ),
+                .child(S.documentTypeList('promotion').title('Promotions')),
               S.listItem()
                 .title('Add Seller/Vendor')
-                .child(
-                  S.document()
-                    .schemaType('seller')
-                    .documentId('drafts.')
-                ),
+                .child(S.documentTypeList('seller').title('Sellers')),
               S.listItem()
                 .title('Create Manual Order')
-                .child(
-                  S.document()
-                    .schemaType('order')
-                    .documentId('drafts.')
-                ),
+                .child(S.documentTypeList('order').title('Orders')),
             ])
         ),
     ])

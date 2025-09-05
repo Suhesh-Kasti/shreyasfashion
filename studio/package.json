@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "sanity dev --port 3333",
     "start": "sanity start",
-    "build": "sanity build",
+    "build": "sanity build --source-maps",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "clean": "rm -rf node_modules package-lock.json",
