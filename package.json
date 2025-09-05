@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "studio:dev": "cd studio && npm run dev",
+    "studio:build": "cd studio && npm run build",
+    "studio:deploy": "cd studio && npm run deploy",
+    "studio:install": "cd studio && npm install"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",

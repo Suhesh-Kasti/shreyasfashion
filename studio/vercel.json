@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "name": "shreyas-fashion-studio",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "SANITY_STUDIO_PROJECT_ID": "@sanity_project_id",
+    "SANITY_STUDIO_DATASET": "@sanity_dataset"
+  }
+}

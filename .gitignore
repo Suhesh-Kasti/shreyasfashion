@@ -33,3 +33,120 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# studio dependencies and build files
+studio/node_modules/
+studio/.next/
+studio/dist/
+studio/build/
+studio/.sanity/
+studio/.vercel/
+
+# studio environment files
+studio/.env
+studio/.env.local
+studio/.env.development.local
+studio/.env.test.local
+studio/.env.production.local
+
+# studio logs
+studio/npm-debug.log*
+studio/yarn-debug.log*
+studio/yarn-error.log*
+studio/lerna-debug.log*
+
+# studio runtime data
+studio/pids
+studio/*.pid
+studio/*.seed
+studio/*.pid.lock
+
+# studio coverage directory used by tools like istanbul
+studio/coverage/
+studio/*.lcov
+
+# studio nyc test coverage
+studio/.nyc_output
+
+# studio dependency directories
+studio/jspm_packages/
+
+# studio optional npm cache directory
+studio/.npm
+
+# studio optional eslint cache
+studio/.eslintcache
+
+# studio microbundle cache
+studio/.rpt2_cache/
+studio/.rts2_cache_cjs/
+studio/.rts2_cache_es/
+studio/.rts2_cache_umd/
+
+# studio optional REPL history
+studio/.node_repl_history
+
+# studio output of 'npm pack'
+studio/*.tgz
+
+# studio yarn integrity file
+studio/.yarn-integrity
+
+# studio parcel-bundler cache (https://parceljs.org/)
+studio/.cache
+studio/.parcel-cache
+
+# studio next.js build output
+studio/.next
+
+# studio nuxt.js build / generate output
+studio/.nuxt
+studio/dist
+
+# studio gatsby files
+studio/.cache/
+studio/public
+
+# studio vuepress build output
+studio/.vuepress/dist
+
+# studio serverless directories
+studio/.serverless/
+
+# studio fusebox cache
+studio/.fusebox/
+
+# studio dynamodb local files
+studio/.dynamodb/
+
+# studio ternjs port file
+studio/.tern-port
+
+# studio stores vscode versions used for testing vscode extensions
+studio/.vscode-test
+
+# studio yarn v2
+studio/.yarn/cache
+studio/.yarn/unplugged
+studio/.yarn/build-state.yml
+studio/.yarn/install-state.gz
+studio/.pnp.*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp

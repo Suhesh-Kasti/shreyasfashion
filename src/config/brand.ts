@@ -51,6 +51,7 @@ export const BRAND_CONFIG = {
   // Navigation Menu
   navigation: [
     { name: "Shop", href: "/shop-with-sidebar" },
+    { name: "Blog", href: "/blog" },
     { name: "Wishlist", href: "/wishlist" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
@@ -67,6 +68,7 @@ export const BRAND_CONFIG = {
     company: [
       { name: "About Us", href: "/about" },
       { name: "Our Story", href: "/story" },
+      { name: "Blog", href: "/blog" },
       { name: "Careers", href: "/careers" },
       { name: "Press", href: "/press" },
     ],

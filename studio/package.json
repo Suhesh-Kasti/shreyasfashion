@@ -1,0 +1,40 @@
+{
+  "name": "shreyas-fashion-studio",
+  "version": "1.0.0",
+  "description": "Shreya's Fashion Store - Content Management Studio",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sanity dev --port 3333",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "clean": "rm -rf node_modules package-lock.json",
+    "fresh-install": "npm run clean && npm install --legacy-peer-deps"
+  },
+  "keywords": [
+    "sanity",
+    "cms",
+    "shreyas",
+    "fashion",
+    "ecommerce",
+    "nepal"
+  ],
+  "author": "Shreya's Fashion Store",
+  "license": "MIT",
+  "dependencies": {
+    "@sanity/color-input": "^3.1.0",
+    "@sanity/icons": "^3.4.0",
+    "@sanity/vision": "^4.6.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "sanity": "^4.6.1",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.3.3"
+  }
+}
