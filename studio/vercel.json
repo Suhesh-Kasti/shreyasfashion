@@ -15,9 +15,5 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "env": {
-    "SANITY_STUDIO_PROJECT_ID": "@sanity_project_id",
-    "SANITY_STUDIO_DATASET": "@sanity_dataset"
-  }
+  ]
 }
