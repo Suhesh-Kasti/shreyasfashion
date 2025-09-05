@@ -35,13 +35,7 @@ export default defineConfig({
       return prev
     },
   },
-  
-  // API configuration
-  api: {
-    projectId,
-    dataset,
-  },
-  
+
   // Environment-specific settings
   ...(process.env.NODE_ENV === 'development' && {
     // Development-only settings

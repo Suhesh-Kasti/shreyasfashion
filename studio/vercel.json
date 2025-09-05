@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "shreyas-fashion-studio",
+  "name": "shreyastudio",
   "builds": [
     {
       "src": "package.json",
