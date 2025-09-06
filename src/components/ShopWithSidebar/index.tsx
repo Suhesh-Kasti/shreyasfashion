@@ -59,12 +59,12 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
           // Handle both string and object category formats
           const productCategory = typeof product.category === 'string'
             ? product.category
-            : product.category?.name || product.category?.title;
+            : (product.category as any)?.name || (product.category as any)?.title;
 
           // Handle both string and object category formats for comparison
           const categoryName = typeof category === 'string'
             ? category
-            : category.name || category.title;
+            : (category as any).name || (category as any).title;
 
           return productCategory?.toLowerCase() === categoryName?.toLowerCase();
         }).length;
@@ -101,7 +101,7 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
             // Handle both string and object category formats
             const productCategory = typeof product.category === 'string'
               ? product.category
-              : product.category?.name || product.category?.title;
+              : (product.category as any)?.name || (product.category as any)?.title;
 
             return productCategory?.toLowerCase().includes(selectedCategory.toLowerCase());
           });

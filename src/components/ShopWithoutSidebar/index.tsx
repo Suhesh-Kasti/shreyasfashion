@@ -67,7 +67,7 @@ const ShopWithoutSidebar = ({ products: initialProducts, categories: initialCate
             // Handle both string and object category formats
             const productCategory = typeof product.category === 'string'
               ? product.category
-              : product.category?.name || product.category?.title;
+              : (product.category as any)?.name || (product.category as any)?.title;
 
             return productCategory?.toLowerCase().includes(selectedCategory.toLowerCase());
           });

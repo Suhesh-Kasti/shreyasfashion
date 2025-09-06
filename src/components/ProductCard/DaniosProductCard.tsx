@@ -22,11 +22,11 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
   const dispatch = useAppDispatch();
 
   const wishlistItems = useAppSelector((state) => state.wishlistReducer.items);
-  const productId = product?._id || product?.id;
+  const productId = product?.id;
   const isInWishlist = wishlistItems.some((item) => item?.id === productId);
 
   // Early return if product is null or undefined
-  if (!product || (!product._id && !product.id) || !product.title) {
+  if (!product || !product.id || !product.title) {
     return null;
   }
 

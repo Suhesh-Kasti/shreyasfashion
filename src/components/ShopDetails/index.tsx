@@ -452,9 +452,9 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                       </div>
                       <div className="w-full">
                         <p className="text-sm sm:text-base text-dark">
-                          {Array.isArray(product.sizes)
+                          {Array.isArray(product.sizes) && product.sizes.length > 0
                             ? product.sizes.join(', ').toUpperCase()
-                            : (product.sizes || 'N/A').toString().toUpperCase()
+                            : 'N/A'
                           }
                         </p>
                       </div>
