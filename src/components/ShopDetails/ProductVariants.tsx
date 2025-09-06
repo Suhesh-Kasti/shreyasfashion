@@ -58,20 +58,20 @@ export default function ProductVariants({ product, onVariantChange }: ProductVar
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mb-8">
       {/* Sizes */}
       {product.sizes && product.sizes.length > 0 && (
-        <div>
-          <h4 className="text-lg font-medium text-danios-black mb-3">Size</h4>
+        <div className="mb-6">
+          <h4 className="text-lg font-medium text-gray-900 mb-4">Size</h4>
           <div className="flex flex-wrap gap-3">
             {product.sizes.map((size) => (
               <button
                 key={size}
                 onClick={() => handleSizeChange(size)}
-                className={`px-4 py-2 border-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-4 py-3 border-2 rounded-lg font-medium transition-all duration-200 min-w-[60px] ${
                   selectedSize === size
-                    ? 'border-danios-black bg-danios-black text-white'
-                    : 'border-gray-300 text-danios-text hover:border-danios-black'
+                    ? 'border-blue-600 bg-blue-50 text-blue-700'
+                    : 'border-gray-300 text-gray-700 hover:border-gray-400 bg-white'
                 }`}
               >
                 {size.toUpperCase()}
@@ -83,27 +83,34 @@ export default function ProductVariants({ product, onVariantChange }: ProductVar
 
       {/* Colors */}
       {product.colors && product.colors.length > 0 && (
-        <div>
-          <h4 className="text-lg font-medium text-danios-black mb-3">Color</h4>
+        <div className="mb-6">
+          <h4 className="text-lg font-medium text-gray-900 mb-4">Color</h4>
           <div className="flex flex-wrap gap-3">
             {product.colors.map((color, index) => {
               const colorName = typeof color === 'string' ? color : color.name;
               const colorValue = typeof color === 'string' ? color.toLowerCase() : color.value;
-              const isSelected = typeof selectedColor === 'string'
-                ? selectedColor === colorName
-                : selectedColor?.name === colorName;
+              const isSelected = selectedColor === colorName;
 
               return (
                 <button
                   key={index}
                   onClick={() => handleColorChange(typeof color === 'string' ? color : color)}
-                  className={`px-4 py-2 border-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-3 px-4 py-3 border-2 rounded-lg font-medium transition-all duration-200 min-w-[120px] ${
                     isSelected
-                      ? 'border-danios-black bg-danios-black text-white'
-                      : 'border-gray-300 text-danios-text hover:border-danios-black'
+                      ? 'border-blue-600 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 text-gray-700 hover:border-gray-400 bg-white'
                   }`}
                 >
-                  {colorName}
+                  {/* Color Box */}
+                  <div
+                    className="w-6 h-6 rounded-full border-2 border-white shadow-sm flex-shrink-0"
+                    style={{
+                      backgroundColor: colorValue || '#000000',
+                      boxShadow: '0 0 0 1px rgba(0,0,0,0.1)'
+                    }}
+                  />
+                  {/* Color Name */}
+                  <span className="text-sm font-medium">{colorName}</span>
                 </button>
               );
             })}
@@ -113,15 +120,15 @@ export default function ProductVariants({ product, onVariantChange }: ProductVar
 
       {/* Material */}
       {product.material && (
-        <div>
-          <h4 className="text-lg font-medium text-danios-black mb-3">Material</h4>
+        <div className="mb-6">
+          <h4 className="text-lg font-medium text-gray-900 mb-4">Material</h4>
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => handleMaterialChange(product.material)}
-              className={`px-4 py-2 border-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-4 py-3 border-2 rounded-lg font-medium transition-all duration-200 ${
                 selectedMaterial === product.material
-                  ? 'border-danios-black bg-danios-black text-white'
-                  : 'border-gray-300 text-danios-text hover:border-danios-black'
+                  ? 'border-blue-600 bg-blue-50 text-blue-700'
+                  : 'border-gray-300 text-gray-700 hover:border-gray-400 bg-white'
               }`}
             >
               {product.material}
@@ -203,18 +210,7 @@ export default function ProductVariants({ product, onVariantChange }: ProductVar
         </div>
       </div>
 
-      {/* Product Info - Only weight for clothing */}
-      {product.weight && (
-        <div className="pt-6 border-t border-gray-200">
-          <h4 className="text-lg font-medium text-danios-black mb-3">Product Details</h4>
-          <div className="space-y-2 text-sm text-danios-text">
-            <div className="flex justify-between">
-              <span>Weight:</span>
-              <span>{product.weight}g</span>
-            </div>
-          </div>
-        </div>
-      )}
+
     </div>
   )
 }

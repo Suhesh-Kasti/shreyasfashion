@@ -51,7 +51,7 @@ const ShopWithoutSidebar = ({ products: initialProducts, categories: initialCate
 
   // Filter products when category or search changes
   useEffect(() => {
-    const filterProducts = async () => {
+    const filterProducts = () => {
       if (!selectedCategory && !searchQuery) {
         setFilteredProducts(initialProducts);
         return;
@@ -59,7 +59,28 @@ const ShopWithoutSidebar = ({ products: initialProducts, categories: initialCate
 
       setIsLoading(true);
       try {
-        const filtered = await getFilteredProducts(selectedCategory, searchQuery);
+        let filtered = [...initialProducts];
+
+        // Apply category filter
+        if (selectedCategory) {
+          filtered = filtered.filter(product => {
+            // Handle both string and object category formats
+            const productCategory = typeof product.category === 'string'
+              ? product.category
+              : product.category?.name || product.category?.title;
+
+            return productCategory?.toLowerCase().includes(selectedCategory.toLowerCase());
+          });
+        }
+
+        // Apply search filter
+        if (searchQuery) {
+          filtered = filtered.filter(product =>
+            product.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+        }
+
         setFilteredProducts(filtered);
       } catch (error) {
         console.error('Error filtering products:', error);

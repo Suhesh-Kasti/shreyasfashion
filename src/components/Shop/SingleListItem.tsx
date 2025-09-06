@@ -52,7 +52,7 @@ const SingleListItem = ({ item }: { item: Product }) => {
             </div>
           )}
 
-          <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
+          <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-4 pb-5 ease-linear duration-200 group-hover:translate-y-0">
             <button
               onClick={() => {
                 openModal();
@@ -127,7 +127,7 @@ const SingleListItem = ({ item }: { item: Product }) => {
             </span>
           </div>
 
-          <div className="flex items-center gap-2.5 mb-2">
+          <div className="flex items-center gap-3 mb-2">
             <div className="flex items-center gap-1">
               <Image
                 src="/images/icons/icon-star.svg"

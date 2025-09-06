@@ -5,7 +5,7 @@ import { getBrandTitle, getBrandName } from "@/config/brand";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: getBrandTitle("Shop"),
+  title: getBrandTitle("Shop Gallery"),
   description: `Browse our collection of premium streetwear crafted in Nepal. Find sweatshirts, t-shirts, pants and more from ${getBrandName()}.`,
   // other metadata
 };

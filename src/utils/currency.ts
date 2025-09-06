@@ -1,5 +1,5 @@
 /**
- * Currency formatting utilities for DANIOS store
+ * Currency formatting utilities for fashion store
  * All prices are displayed in Nepali Rupees (Rs.)
  */
 

@@ -13,7 +13,7 @@ import ProductReviews from "./ProductReviews";
 import RecentlyViewdItems from "./RecentlyViewd";
 import Newsletter from "../Common/Newsletter";
 import { formatPrice, calculateDiscount } from "@/utils/currency";
-import { getProductById } from "../../../lib/sanity";
+// Removed direct Sanity import to prevent CORS errors
 import { getBrandName, BRAND_CONFIG } from "@/config/brand";
 import { useSession, signIn } from "next-auth/react";
 import toast from "react-hot-toast";
@@ -42,7 +42,29 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const fetchedProduct = await getProductById(productId);
+        console.log('Fetching product with ID:', productId);
+
+        // Try to fetch from API first (which connects to Sanity)
+        try {
+          const response = await fetch(`/api/products/${productId}`);
+          if (response.ok) {
+            const fetchedProduct = await response.json();
+            console.log('Fetched product from API:', fetchedProduct);
+            setProduct(fetchedProduct);
+            return;
+          }
+        } catch (apiError) {
+          console.log('API fetch failed, using fallback data:', apiError);
+        }
+
+        // Fallback data if API fails
+        const fallbackProducts = [ // No fallback data - only use real Sanity data
+
+
+        ];
+
+        const fetchedProduct = fallbackProducts.find(p => p._id === productId || p.id === productId);
+        console.log('Using fallback product:', fetchedProduct);
         setProduct(fetchedProduct);
 
         // Set default selections
@@ -111,21 +133,24 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-black"></div>
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading product details...</p>
+        </div>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h2>
           <p className="text-gray-600 mb-8">The product you&apos;re looking for doesn&apos;t exist.</p>
           <Link
-            href="/shop-with-sidebar"
-            className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition-colors"
+            href="/shop-collection"
+            className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors"
           >
             Back to Shop
           </Link>
@@ -140,12 +165,17 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
     <>
       {product && (
         <>
-          <section className="overflow-hidden bg-gray-50 py-12 lg:py-16">
+          <section className="overflow-hidden bg-white py-8 lg:py-12">
             <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 {/* Product Images */}
                 <div className="w-full">
-                  <ProductImageGallery product={product} />
+                  <ProductImageGallery
+                    product={product}
+                    selectedColor={selectedColor ? product.colors?.find(c =>
+                      (typeof c === 'string' ? c : c.name) === selectedColor
+                    ) : null}
+                  />
                 </div>
 
                 {/* Product Info */}
@@ -190,9 +220,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                   <ProductVariants
                     product={product}
                     onVariantChange={(variant) => {
-                      setSelectedSize(variant.size || '');
-                      setSelectedColor(variant.color?.name || '');
-                      setQuantity(variant.quantity || 1);
+                      if (variant.size) setSelectedSize(variant.size);
+                      if (variant.color) {
+                        const colorName = typeof variant.color === 'string' ? variant.color : variant.color.name;
+                        setSelectedColor(colorName);
+                      }
+                      if (variant.quantity) setQuantity(variant.quantity);
                     }}
                   />
 
@@ -224,19 +257,7 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                     </button>
                   </div>
 
-                  {/* Product Meta */}
-                  <div className="space-y-2 text-sm text-gray-600">
-                    {product.category && (
-                      <p>
-                        <span className="font-medium">Category:</span> {product.category}
-                      </p>
-                    )}
-                    {product.material && (
-                      <p>
-                        <span className="font-medium">Material:</span> {product.material}
-                      </p>
-                    )}
-                  </div>
+
                 </div>
               </div>
             </div>
@@ -355,7 +376,7 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                       </div>
                       <div className="w-full">
                         <p className="text-sm sm:text-base text-dark">
-                          {product.season.join(', ')}
+                          {Array.isArray(product.season) ? product.season.join(', ') : product.season}
                         </p>
                       </div>
                     </div>
@@ -383,7 +404,10 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                       </div>
                       <div className="w-full">
                         <p className="text-sm sm:text-base text-dark">
-                          {product.additionalInfo.careInstructions.join(', ')}
+                          {Array.isArray(product.additionalInfo?.careInstructions)
+                            ? product.additionalInfo.careInstructions.join(', ')
+                            : product.additionalInfo?.careInstructions || 'N/A'
+                          }
                         </p>
                       </div>
                     </div>
@@ -411,7 +435,10 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                       </div>
                       <div className="w-full">
                         <p className="text-sm sm:text-base text-dark">
-                          {product.additionalInfo.sustainability.join(', ')}
+                          {Array.isArray(product.additionalInfo?.sustainability)
+                            ? product.additionalInfo.sustainability.join(', ')
+                            : product.additionalInfo?.sustainability || 'N/A'
+                          }
                         </p>
                       </div>
                     </div>
@@ -425,7 +452,10 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                       </div>
                       <div className="w-full">
                         <p className="text-sm sm:text-base text-dark">
-                          {product.sizes.join(', ').toUpperCase()}
+                          {Array.isArray(product.sizes)
+                            ? product.sizes.join(', ').toUpperCase()
+                            : (product.sizes || 'N/A').toString().toUpperCase()
+                          }
                         </p>
                       </div>
                     </div>

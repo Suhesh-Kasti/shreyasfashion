@@ -5,8 +5,8 @@ import { getBrandName, BRAND_CONFIG } from "@/config/brand";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "About Danios | Premium Fashion from Nepal",
-  description: "Learn about Shreya Ghimire, founder of Danios, and our mission to create premium streetwear in Nepal.",
+  title: `About ${getBrandName()} | Premium Fashion from Nepal`,
+  description: `Learn about ${BRAND_CONFIG.founder}, founder of ${getBrandName()}, and our mission to create premium fashion in Nepal.`,
 };
 
 const AboutPage = () => {
@@ -173,7 +173,7 @@ const AboutPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/shop-with-sidebar"
+              href="/shop-collection"
               className="bg-white text-danios-black px-8 py-4 font-medium hover:bg-gray-100 transition-colors duration-300"
             >
               Shop Collection

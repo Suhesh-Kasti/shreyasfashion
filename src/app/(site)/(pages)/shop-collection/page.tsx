@@ -1,11 +1,12 @@
 import React from "react";
 import ShopWithSidebar from "@/components/ShopWithSidebar";
 import { getAllProducts, getAllCategories } from "../../../../../lib/sanity";
+import { getBrandTitle, getBrandName } from "@/config/brand";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Shop | DANIOS Premium Streetwear",
-  description: "Browse our collection of premium streetwear crafted in Nepal. Find sweatshirts, t-shirts, pants and more from DANIOS.",
+  title: getBrandTitle("Shop Collection"),
+  description: `Browse our collection of premium fashion. Find sweatshirts, t-shirts, pants and more from ${getBrandName()}.`,
   // other metadata
 };
 

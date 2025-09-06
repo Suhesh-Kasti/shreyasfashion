@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { client } from '../../../lib/sanity';
 import { formatPrice } from '@/utils/currency';
 
 interface FilterOption {
@@ -31,9 +30,10 @@ interface FilterConfig {
 interface DynamicFiltersProps {
   onFiltersChange: (filters: Record<string, any>) => void;
   activeFilters: Record<string, any>;
+  products?: any[]; // Add products prop to extract real data
 }
 
-const DynamicFilters: React.FC<DynamicFiltersProps> = ({ onFiltersChange, activeFilters }) => {
+const DynamicFilters: React.FC<DynamicFiltersProps> = ({ onFiltersChange, activeFilters, products = [] }) => {
   const [filterConfigs, setFilterConfigs] = useState<FilterConfig[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedFilters, setExpandedFilters] = useState<Record<string, boolean>>({});
@@ -44,40 +44,88 @@ const DynamicFilters: React.FC<DynamicFiltersProps> = ({ onFiltersChange, active
 
   const fetchFilterConfigs = async () => {
     try {
-      const query = `
-        *[_type == "filterConfig" && enabled == true] | order(sortOrder asc) {
-          _id,
-          title,
-          slug,
-          type,
-          options[] {
-            label,
-            value,
-            color,
-            count
-          },
-          priceRange,
-          enabled,
-          sortOrder,
-          showProductCount,
-          collapsible,
-          defaultExpanded
-        }
-      `;
-      
-      const configs = await client.fetch(query);
+      // Extract real data from products (excluding categories since CategoryDropdown handles that)
+      const sizes = Array.from(new Set(
+        products.flatMap(p => p.sizes || []).filter(Boolean)
+      )).map(size => ({ label: size.toUpperCase(), value: size.toLowerCase() }));
+
+      const colors = Array.from(new Set(
+        products.flatMap(p => {
+          if (Array.isArray(p.colors)) {
+            return p.colors.map(c => typeof c === 'string' ? c : c.name).filter(Boolean);
+          }
+          return [];
+        })
+      )).map(color => ({ label: color, value: color.toLowerCase() }));
+
+      const genders = Array.from(new Set(
+        products.map(p => p.gender).filter(Boolean)
+      )).map(gender => ({ label: gender.charAt(0).toUpperCase() + gender.slice(1), value: gender.toLowerCase() }));
+
+      const configs: FilterConfig[] = [];
+
+      // Note: Categories are handled by CategoryDropdown component, so we don't add them here
+
+      // Add sizes filter if we have sizes
+      if (sizes.length > 0) {
+        configs.push({
+          _id: 'sizes',
+          title: 'Sizes',
+          slug: { current: 'sizes' },
+          type: 'checkbox',
+          options: sizes,
+          enabled: true,
+          sortOrder: 1,
+          showProductCount: false,
+          collapsible: true,
+          defaultExpanded: false
+        });
+      }
+
+      // Add colors filter if we have colors
+      if (colors.length > 0) {
+        configs.push({
+          _id: 'colors',
+          title: 'Colors',
+          slug: { current: 'colors' },
+          type: 'checkbox',
+          options: colors,
+          enabled: true,
+          sortOrder: 2,
+          showProductCount: false,
+          collapsible: true,
+          defaultExpanded: false
+        });
+      }
+
+      // Add gender filter if we have genders
+      if (genders.length > 0) {
+        configs.push({
+          _id: 'gender',
+          title: 'Gender',
+          slug: { current: 'gender' },
+          type: 'checkbox',
+          options: genders,
+          enabled: true,
+          sortOrder: 3,
+          showProductCount: false,
+          collapsible: true,
+          defaultExpanded: false
+        });
+      }
+
       setFilterConfigs(configs);
-      
+
       // Set initial expanded state
       const initialExpanded: Record<string, boolean> = {};
       configs.forEach((config: FilterConfig) => {
         initialExpanded[config.slug.current] = config.defaultExpanded;
       });
       setExpandedFilters(initialExpanded);
-      
+
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching filter configs:', error);
+      console.error('Error setting up filter configs:', error);
       setLoading(false);
     }
   };

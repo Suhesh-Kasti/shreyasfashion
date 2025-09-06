@@ -41,7 +41,7 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
     if (searchQuery.trim()) {
       setIsLoading(true);
       // Navigate to shop page with search query
-      router.push(`/shop-with-sidebar?search=${encodeURIComponent(searchQuery.trim())}`);
+      router.push(`/shop-collection?search=${encodeURIComponent(searchQuery.trim())}`);
       setIsOpen(false);
       setSearchQuery("");
       setIsLoading(false);
@@ -119,21 +119,21 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
               </p>
               <div className="space-y-2">
                 <Link
-                  href="/shop-with-sidebar?category=sweatshirts"
+                  href="/shop-collection?category=sweatshirts"
                   className="block text-sm text-danios-text hover:text-danios-black transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Sweatshirts
                 </Link>
                 <Link
-                  href="/shop-with-sidebar?category=tshirts"
+                  href="/shop-collection?category=tshirts"
                   className="block text-sm text-danios-text hover:text-danios-black transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   T-Shirts
                 </Link>
                 <Link
-                  href="/shop-with-sidebar?category=pants"
+                  href="/shop-collection?category=pants"
                   className="block text-sm text-danios-text hover:text-danios-black transition-colors"
                   onClick={() => setIsOpen(false)}
                 >

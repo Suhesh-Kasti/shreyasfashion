@@ -19,38 +19,14 @@ interface ProductReviewsProps {
 }
 
 const ProductReviews: React.FC<ProductReviewsProps> = ({ product }) => {
-  const [reviews, setReviews] = useState<Review[]>([
-    {
-      id: '1',
-      customerName: 'Priya Sharma',
-      rating: 5,
-      title: 'Amazing quality!',
-      comment: 'The fabric is so soft and the fit is perfect. I love how comfortable these cargo pants are. Definitely worth the price!',
-      date: '2024-01-15',
-      verified: true,
-      helpful: 12
-    },
-    {
-      id: '2',
-      customerName: 'Rajesh Thapa',
-      rating: 4,
-      title: 'Great streetwear piece',
-      comment: 'Really good quality and the pockets are very functional. The only thing is it took a bit longer to arrive than expected.',
-      date: '2024-01-10',
-      verified: true,
-      helpful: 8
-    },
-    {
-      id: '3',
-      customerName: 'Anita Gurung',
-      rating: 5,
-      title: 'Perfect for Nepal weather',
-      comment: 'These pants are perfect for our climate. The material breathes well and the style is exactly what I was looking for.',
-      date: '2024-01-05',
-      verified: false,
-      helpful: 15
+  // Use reviews from Sanity product data, ensure it's always an array
+  const [reviews, setReviews] = useState<Review[]>(() => {
+    if (Array.isArray(product.reviews)) {
+      return product.reviews;
     }
-  ]);
+    // If reviews is not an array (could be a number or other type), return empty array
+    return [];
+  });
 
   const [newReview, setNewReview] = useState({
     rating: 5,
@@ -120,7 +96,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ product }) => {
         </div>
 
         <div className="flex flex-col gap-6">
-          {reviews.map((review) => (
+          {Array.isArray(reviews) && reviews.length > 0 ? reviews.map((review) => (
             <div key={review.id} className="rounded-xl bg-white shadow-1 p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
@@ -157,7 +133,11 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ product }) => {
                 </button>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className="text-center py-8">
+              <p className="text-gray-600">No reviews yet. Be the first to review this product!</p>
+            </div>
+          )}
         </div>
       </div>
 

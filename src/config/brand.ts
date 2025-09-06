@@ -50,7 +50,7 @@ export const BRAND_CONFIG = {
   
   // Navigation Menu
   navigation: [
-    { name: "Shop", href: "/shop-with-sidebar" },
+    { name: "Shop", href: "/shop-collection" },
     { name: "Blog", href: "/blog" },
     { name: "Wishlist", href: "/wishlist" },
     { name: "About", href: "/about" },
@@ -73,10 +73,10 @@ export const BRAND_CONFIG = {
       { name: "Press", href: "/press" },
     ],
     shop: [
-      { name: "All Products", href: "/shop-with-sidebar" },
-      { name: "New Arrivals", href: "/shop-with-sidebar?filter=new" },
-      { name: "Best Sellers", href: "/shop-with-sidebar?filter=popular" },
-      { name: "Sale", href: "/shop-with-sidebar?filter=sale" },
+      { name: "All Products", href: "/shop-collection" },
+      { name: "New Arrivals", href: "/shop-collection?filter=new" },
+      { name: "Best Sellers", href: "/shop-collection?filter=popular" },
+      { name: "Sale", href: "/shop-collection?filter=sale" },
     ],
   },
   

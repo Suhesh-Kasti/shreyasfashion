@@ -28,7 +28,7 @@ const DaniosBestSeller = ({ products }: BestSellerProps) => {
           </div>
 
           <Link
-            href="/shop-with-sidebar"
+            href="/shop-collection"
             className="inline-flex items-center text-danios-black font-medium hover:text-danios-accent transition-colors duration-300 group"
           >
             View All
@@ -62,7 +62,7 @@ const DaniosBestSeller = ({ products }: BestSellerProps) => {
               No best sellers available at the moment.
             </div>
             <Link
-              href="/shop-with-sidebar"
+              href="/shop-collection"
               className="inline-flex items-center text-danios-black font-medium hover:text-danios-accent transition-colors duration-300"
             >
               Browse All Products

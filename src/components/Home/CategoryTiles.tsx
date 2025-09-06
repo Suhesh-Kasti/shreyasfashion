@@ -26,31 +26,8 @@ const CategoryTiles = ({ categories: propCategories }: CategoryTilesProps) => {
         }
       } catch (error) {
         console.error('Error fetching categories:', error);
-        // Fallback to default categories if Sanity fails
-        setCategories([
-          {
-            id: "sweatshirts",
-            title: "Sweatshirts",
-            description: "Comfort meets style in our premium collection",
-            img: "/images/categories/categories-02.png",
-            slug: "sweatshirts",
-            featured: true,
-          },
-          {
-            id: "tshirts",
-            title: "T-Shirts",
-            description: "Essential tees crafted from finest materials",
-            img: "/images/categories/categories-01.png",
-            slug: "tshirts",
-          },
-          {
-            id: "pants",
-            title: "Pants",
-            description: "Versatile bottoms for every occasion",
-            img: "/images/categories/categories-04.png",
-            slug: "pants",
-          },
-        ]);
+        // Only show categories that have actual products, no fallback dummy data
+        setCategories([]);
       } finally {
         setLoading(false);
         setTimeout(() => setIsVisible(true), 100);
@@ -103,7 +80,7 @@ const CategoryTiles = ({ categories: propCategories }: CategoryTilesProps) => {
               style={{ transitionDelay: `${index * 200}ms` }}
             >
               <Link
-                href={`/shop-with-sidebar?category=${category.slug}`}
+                href={`/shop-collection?category=${category.slug}`}
                 className="block relative overflow-hidden bg-white hover:shadow-2xl transition-all duration-700 group-hover:scale-[1.02]"
               >
                 {/* Image Container */}
@@ -195,7 +172,7 @@ const CategoryTiles = ({ categories: propCategories }: CategoryTilesProps) => {
           <div className="inline-flex items-center gap-4 group">
             <div className="w-12 h-px bg-black group-hover:w-16 transition-all duration-500"></div>
             <Link
-              href="/shop-with-sidebar"
+              href="/shop-collection"
               className="text-black font-light text-lg hover:font-medium transition-all duration-300 tracking-wide hover:tracking-wider"
             >
               Explore All Collections

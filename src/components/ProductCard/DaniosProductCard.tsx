@@ -8,6 +8,7 @@ import { addItemToCart } from "@/redux/features/cart-slice";
 import { addItemToWishlist, removeItemFromWishlist } from "@/redux/features/wishlist-slice";
 import { useAppSelector } from "@/redux/store";
 import { formatPrice, calculateDiscount } from "@/utils/currency";
+import { getBrandName } from "@/config/brand";
 import toast from "react-hot-toast";
 
 interface DaniosProductCardProps {
@@ -21,10 +22,11 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
   const dispatch = useAppDispatch();
 
   const wishlistItems = useAppSelector((state) => state.wishlistReducer.items);
-  const isInWishlist = wishlistItems.some((item) => item?.id === product?.id);
+  const productId = product?._id || product?.id;
+  const isInWishlist = wishlistItems.some((item) => item?.id === productId);
 
   // Early return if product is null or undefined
-  if (!product || !product.id || !product.title) {
+  if (!product || (!product._id && !product.id) || !product.title) {
     return null;
   }
 
@@ -34,7 +36,7 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
 
     dispatch(
       addItemToCart({
-        id: product.id,
+        id: productId,
         title: product.title,
         price: product.price,
         discountedPrice: product.discountedPrice,
@@ -51,11 +53,11 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
     e.stopPropagation();
     
     if (isInWishlist) {
-      dispatch(removeItemFromWishlist(product.id));
+      dispatch(removeItemFromWishlist(productId));
     } else {
       dispatch(
         addItemToWishlist({
-          id: product.id,
+          id: productId,
           title: product.title,
           price: product.price,
           discountedPrice: product.discountedPrice,
@@ -70,10 +72,10 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
   const discountPercentage = calculateDiscount(product.price, product.discountedPrice);
 
   return (
-    <div className={`group relative bg-white ${className}`}>
-      <Link href={`/shop-details?id=${product.id}`}>
+    <div className={`group relative bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ${className}`}>
+      <Link href={`/shop-details?id=${productId}`}>
         <div
-          className="relative overflow-hidden bg-gray-50"
+          className="relative overflow-hidden bg-gray-50 rounded-t-lg"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -82,7 +84,7 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
             {product.imgs?.thumbnails?.[0] && product.imgs.thumbnails[0] !== '/images/placeholder.jpg' ? (
               <Image
                 src={product.imgs.thumbnails[0]}
-                alt={`${product.title} - DANIOS premium streetwear`}
+                alt={`${product.title} - ${getBrandName()} premium fashion`}
                 fill
                 className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                   imageLoaded ? "opacity-100" : "opacity-0"
@@ -103,7 +105,7 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
             {product.imgs?.thumbnails?.[1] && product.imgs.thumbnails[1] !== '/images/placeholder.jpg' && (
               <Image
                 src={product.imgs.thumbnails[1]}
-                alt={`${product.title} - Alternative view - DANIOS premium streetwear`}
+                alt={`${product.title} - Alternative view - ${getBrandName()} premium fashion`}
                 fill
                 className={`object-cover transition-all duration-700 ${
                   isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
@@ -160,14 +162,14 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
         </div>
 
         {/* Product Info */}
-        <div className="pt-4 pb-2">
-          <h3 className="text-black font-medium text-lg mb-2 line-clamp-2 group-hover:text-gray-700 transition-colors duration-300">
+        <div className="p-4">
+          <h3 className="text-gray-900 font-medium text-base mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
             {product.title}
           </h3>
 
           {/* Price */}
-          <div className="flex items-center gap-2">
-            <span className="text-black font-bold text-xl">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-gray-900 font-bold text-lg">
               {formatPrice(product.discountedPrice)}
             </span>
             {product.price > product.discountedPrice && (
@@ -179,7 +181,7 @@ const DaniosProductCard = ({ product, className = "" }: DaniosProductCardProps) 
 
           {/* Reviews Count (if available) */}
           {product.reviews > 0 && (
-            <div className="flex items-center mt-2">
+            <div className="flex items-center">
               <span className="text-gray-500 text-sm">
                 ({product.reviews} reviews)
               </span>

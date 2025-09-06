@@ -1,7 +1,7 @@
 const CACHE_NAME = 'fashion-store-v1';
 const urlsToCache = [
   '/',
-  '/shop-with-sidebar',
+  '/shop-collection',
   '/wishlist',
   '/about',
   '/contact',
