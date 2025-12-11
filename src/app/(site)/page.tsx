@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-// Enable static generation for Vercel
-export const revalidate = 60; // Revalidate every 60 seconds
+// Disable static generation for debugging build error
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   // Fetch data from Sanity CMS

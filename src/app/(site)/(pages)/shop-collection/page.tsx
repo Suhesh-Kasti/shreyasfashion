@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-// Enable static generation for Vercel
-export const revalidate = 60; // Revalidate every 60 seconds
+// Disable static generation for debugging build error
+export const dynamic = 'force-dynamic';
 
 const ShopWithSidebarPage = async () => {
   // Fetch products and categories from Sanity CMS

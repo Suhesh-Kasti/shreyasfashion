@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description: `Latest fashion trends, styling tips, and news from ${getBrandName()}`,
 }
 
+// Disable static generation for debugging build error
+export const dynamic = 'force-dynamic';
+
 export default async function BlogPage() {
   const blogPosts = await getAllBlogPosts()
 
