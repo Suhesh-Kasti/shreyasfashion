@@ -282,7 +282,7 @@ const EnhancedCheckout: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-danios-black mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-brand-black mx-auto mb-4"></div>
             <p className="text-gray-600">Loading...</p>
           </div>
         </div>
@@ -368,7 +368,7 @@ const EnhancedCheckout: React.FC = () => {
                   name="customerName"
                   value={formData.customerName}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.customerName ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black ${errors.customerName ? 'border-red-500' : 'border-gray-300'
                     }`}
                   placeholder="Enter your full name"
                 />
@@ -387,7 +387,7 @@ const EnhancedCheckout: React.FC = () => {
                   name="customerEmail"
                   value={formData.customerEmail}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.customerEmail ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black ${errors.customerEmail ? 'border-red-500' : 'border-gray-300'
                     }`}
                   placeholder="Enter your email address"
                 />
@@ -406,7 +406,7 @@ const EnhancedCheckout: React.FC = () => {
                   name="customerPhone"
                   value={formData.customerPhone}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.customerPhone ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black ${errors.customerPhone ? 'border-red-500' : 'border-gray-300'
                     }`}
                   placeholder="Enter your phone number"
                 />
@@ -431,7 +431,7 @@ const EnhancedCheckout: React.FC = () => {
                   value={formData.deliveryAddress}
                   onChange={handleInputChange}
                   rows={3}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.deliveryAddress ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black ${errors.deliveryAddress ? 'border-red-500' : 'border-gray-300'
                     }`}
                   placeholder="Enter your complete delivery address"
                 />
@@ -451,7 +451,7 @@ const EnhancedCheckout: React.FC = () => {
                     name="deliveryCity"
                     value={formData.deliveryCity}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.deliveryCity ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black ${errors.deliveryCity ? 'border-red-500' : 'border-gray-300'
                       }`}
                     placeholder="City"
                   />
@@ -470,7 +470,7 @@ const EnhancedCheckout: React.FC = () => {
                     name="deliveryPostalCode"
                     value={formData.deliveryPostalCode}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black"
                     placeholder="Postal code"
                   />
                 </div>
@@ -486,7 +486,7 @@ const EnhancedCheckout: React.FC = () => {
                   value={formData.deliveryInstructions}
                   onChange={handleInputChange}
                   rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black"
                   placeholder="Any special instructions for delivery"
                 />
               </div>
@@ -559,7 +559,7 @@ const EnhancedCheckout: React.FC = () => {
                   value="esewa"
                   checked={formData.paymentMethod === 'esewa'}
                   onChange={handleInputChange}
-                  className="text-danios-black focus:ring-danios-black"
+                  className="text-brand-black focus:ring-brand-black"
                 />
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
@@ -576,7 +576,7 @@ const EnhancedCheckout: React.FC = () => {
                   value="cod"
                   checked={formData.paymentMethod === 'cod'}
                   onChange={handleInputChange}
-                  className="text-danios-black focus:ring-danios-black"
+                  className="text-brand-black focus:ring-brand-black"
                 />
                 <div className="flex items-center space-x-2">
                   <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -593,7 +593,7 @@ const EnhancedCheckout: React.FC = () => {
                   value="bank_transfer"
                   checked={formData.paymentMethod === 'bank_transfer'}
                   onChange={handleInputChange}
-                  className="text-danios-black focus:ring-danios-black"
+                  className="text-brand-black focus:ring-brand-black"
                 />
                 <div className="flex items-center space-x-2">
                   <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -637,7 +637,7 @@ const EnhancedCheckout: React.FC = () => {
                 value={formData.orderNotes}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-black"
                 placeholder="Any special notes for your order"
               />
             </div>
@@ -648,7 +648,7 @@ const EnhancedCheckout: React.FC = () => {
               disabled={isSubmitting || cartItems.length === 0}
               className={`w-full mt-6 py-3 px-4 rounded-md font-medium transition-all duration-200 ${isSubmitting || cartItems.length === 0
                 ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-danios-black text-white hover:bg-danios-text hover:shadow-lg transform hover:-translate-y-0.5'
+                : 'bg-brand-black text-white hover:bg-brand-text hover:shadow-lg transform hover:-translate-y-0.5'
                 }`}
             >
               {isSubmitting ? 'Processing...' : `Place Order - ${formatPrice(finalTotal)}`}

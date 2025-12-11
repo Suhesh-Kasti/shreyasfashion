@@ -42,6 +42,18 @@ const config: Config = {
         "text-light": "#666666",
         "text-muted": "#999999",
       },
+      "danios": {
+        "black": "#000000",
+        "white": "#FFFFFF",
+        "neutral": "#f8f8f8",
+        "neutral-2": "#e0e0e0",
+        "neutral-3": "#c0c0c0",
+        "accent": "#2d5016",
+        "accent-2": "#8b7355",
+        "text": "#1a1a1a",
+        "text-light": "#666666",
+        "text-muted": "#999999",
+      },
       meta: {
         DEFAULT: "#F7F9FC",
         2: "#495270",
