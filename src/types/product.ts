@@ -13,6 +13,7 @@ export type Product = {
     gallery?: string[];
   };
   inStock?: boolean;
+  quantity?: number;
   featured?: boolean;
   gender?: string;
   sizes?: string[];
@@ -40,4 +41,5 @@ export type Product = {
     careInstructions?: string[];
     sustainability?: string[];
   };
+  createdAt?: string;
 };

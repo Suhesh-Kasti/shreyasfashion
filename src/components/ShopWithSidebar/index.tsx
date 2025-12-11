@@ -24,6 +24,7 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("0"); // 0: Latest, 1: Best Selling, 2: Old
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
   const [categories, setCategories] = useState<Category[]>(initialCategories || []);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,21 +98,40 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
 
         // Apply category filter
         if (selectedCategory) {
+          // Find the category object to get the name, as selectedCategory is likely a slug
+          // But products use category name string
+          const categoryObj = categories.find(c => c.slug === selectedCategory);
+          const categoryName = categoryObj ? categoryObj.title : selectedCategory;
+
           filtered = filtered.filter(product => {
             // Handle both string and object category formats
             const productCategory = typeof product.category === 'string'
               ? product.category
               : (product.category as any)?.name || (product.category as any)?.title;
 
+            // Strict comparison for category name to avoid false positives (e.g. "Pants" inside "Cargo Pants")
+            // But usually we want exact match if we have the category name.
+            // If we only have slug and failed to find name, we might try partial match.
+
+            if (categoryObj) {
+              return productCategory?.toLowerCase() === categoryName?.toLowerCase();
+            }
+
+            // Fallback if we couldn't resolve slug to name (shouldn't happen often)
             return productCategory?.toLowerCase().includes(selectedCategory.toLowerCase());
           });
         }
 
-        // Apply search filter
+        // Apply search filter (Enhanced)
         if (searchQuery) {
+          const query = searchQuery.toLowerCase();
           filtered = filtered.filter(product =>
-            product.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+            product.title?.toLowerCase().includes(query) ||
+            product.description?.toLowerCase().includes(query) ||
+            product.material?.toLowerCase().includes(query) ||
+            product.style?.toLowerCase().includes(query) ||
+            product.tags?.some(tag => tag.toLowerCase().includes(query)) ||
+            (typeof product.category === 'string' && product.category.toLowerCase().includes(query))
           );
         }
 
@@ -119,6 +139,22 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
         if (Object.keys(dynamicFilters).length > 0) {
           filtered = applyDynamicFilters(filtered, dynamicFilters);
         }
+
+        // Apply Sorting
+        filtered.sort((a, b) => {
+          if (sortBy === "0") {
+            // Latest (Newest first)
+            return (new Date(b.createdAt || 0).getTime()) - (new Date(a.createdAt || 0).getTime());
+          } else if (sortBy === "1") {
+            // Best Selling (Using reviews as proxy or tags)
+            // Ideally we'd have a 'sales' field. For now, let's use reviews count
+            return (b.reviews || 0) - (a.reviews || 0);
+          } else if (sortBy === "2") {
+            // Old Products (Oldest first)
+            return (new Date(a.createdAt || 0).getTime()) - (new Date(b.createdAt || 0).getTime());
+          }
+          return 0;
+        });
 
         setFilteredProducts(filtered);
       } catch (error) {
@@ -130,7 +166,7 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
     };
 
     filterProducts();
-  }, [selectedCategory, searchQuery, dynamicFilters, initialProducts]);
+  }, [selectedCategory, searchQuery, dynamicFilters, initialProducts, sortBy]);
 
   // Handle category selection
   const handleCategorySelect = (categorySlug: string | null) => {
@@ -257,25 +293,23 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
         title={"Explore All Products"}
         pages={["shop", "/", "shop collection"]}
       />
-      <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28 bg-[#f3f4f6]">
+      <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28 bg-[#f3f4f6] dark:bg-gray-900">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex gap-7.5">
             {/* <!-- Sidebar Start --> */}
             <div
-              className={`sidebar-content fixed xl:z-1 z-9999 left-0 top-0 xl:translate-x-0 xl:static max-w-[310px] xl:max-w-[270px] w-full ease-out duration-200 ${
-                productSidebar
-                  ? "translate-x-0 bg-white p-5 h-screen overflow-y-auto"
-                  : "-translate-x-full"
-              }`}
+              className={`sidebar-content fixed xl:z-1 z-9999 left-0 top-0 xl:translate-x-0 xl:static max-w-[310px] xl:max-w-[270px] w-full ease-out duration-200 ${productSidebar
+                ? "translate-x-0 bg-white p-5 h-screen overflow-y-auto"
+                : "-translate-x-full"
+                }`}
             >
               <button
                 onClick={() => setProductSidebar(!productSidebar)}
                 aria-label="button for product sidebar toggle"
-                className={`xl:hidden absolute -right-12.5 sm:-right-8 flex items-center justify-center w-8 h-8 rounded-md bg-white shadow-1 ${
-                  stickyMenu
-                    ? "lg:top-20 sm:top-34.5 top-35"
-                    : "lg:top-24 sm:top-39 top-37"
-                }`}
+                className={`xl:hidden absolute -right-12.5 sm:-right-8 flex items-center justify-center w-8 h-8 rounded-md bg-white shadow-1 ${stickyMenu
+                  ? "lg:top-20 sm:top-34.5 top-35"
+                  : "lg:top-24 sm:top-39 top-37"
+                  }`}
               >
                 <svg
                   className="fill-current"
@@ -435,7 +469,11 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
                 <div className="flex items-center justify-between">
                   {/* <!-- top bar left --> */}
                   <div className="flex flex-wrap items-center gap-4">
-                    <CustomSelect options={options} />
+                    <CustomSelect
+                      options={options}
+                      value={sortBy}
+                      onChange={(val) => setSortBy(val)}
+                    />
 
                     <p>
                       Showing <span className="text-dark">{filteredProducts.length} of {initialProducts.length}</span>{" "}
@@ -454,11 +492,10 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
                     <button
                       onClick={() => setProductStyle("grid")}
                       aria-label="button for product grid tab"
-                      className={`${
-                        productStyle === "grid"
-                          ? "bg-blue border-blue text-white"
-                          : "text-dark bg-gray-1 border-gray-3"
-                      } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-blue hover:border-blue hover:text-white`}
+                      className={`${productStyle === "grid"
+                        ? "bg-blue border-blue text-white"
+                        : "text-dark bg-gray-1 border-gray-3"
+                        } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-blue hover:border-blue hover:text-white`}
                     >
                       <svg
                         className="fill-current"
@@ -498,11 +535,10 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
                     <button
                       onClick={() => setProductStyle("list")}
                       aria-label="button for product list tab"
-                      className={`${
-                        productStyle === "list"
-                          ? "bg-blue border-blue text-white"
-                          : "text-dark bg-gray-1 border-gray-3"
-                      } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-blue hover:border-blue hover:text-white`}
+                      className={`${productStyle === "list"
+                        ? "bg-blue border-blue text-white"
+                        : "text-dark bg-gray-1 border-gray-3"
+                        } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-blue hover:border-blue hover:text-white`}
                     >
                       <svg
                         className="fill-current"
@@ -532,11 +568,10 @@ const ShopWithSidebar = ({ products: initialProducts, categories: initialCategor
 
               {/* <!-- Products Grid Tab Content Start --> */}
               <div
-                className={`${
-                  productStyle === "grid"
-                    ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-7.5 gap-y-9"
-                    : "flex flex-col gap-7.5"
-                }`}
+                className={`${productStyle === "grid"
+                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-7.5 gap-y-9"
+                  : "flex flex-col gap-7.5"
+                  }`}
               >
                 {isLoading ? (
                   <div className="col-span-full flex justify-center items-center py-20">

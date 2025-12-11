@@ -164,66 +164,26 @@ const productSchema = {
     {
       name: 'material',
       title: 'Material',
-      type: 'string',
-      options: {
-        list: [
-          { title: '100% Cotton', value: '100% Cotton' },
-          { title: 'Cotton Blend', value: 'Cotton Blend' },
-          { title: 'Premium Cotton', value: 'Premium Cotton' },
-          { title: 'Organic Cotton', value: 'Organic Cotton' },
-          { title: 'Polyester Blend', value: 'Polyester Blend' },
-          { title: 'Fleece', value: 'Fleece' },
-          { title: 'Denim', value: 'Denim' },
-        ],
-      },
+      type: 'reference',
+      to: [{ type: 'material' }],
     },
     {
       name: 'style',
       title: 'Style',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Casual', value: 'casual' },
-          { title: 'Formal', value: 'formal' },
-          { title: 'Streetwear', value: 'streetwear' },
-          { title: 'Athletic', value: 'athletic' },
-          { title: 'Vintage', value: 'vintage' },
-          { title: 'Minimalist', value: 'minimalist' },
-          { title: 'Oversized', value: 'oversized' },
-        ],
-      },
+      type: 'reference',
+      to: [{ type: 'style' }],
     },
     {
       name: 'season',
       title: 'Season',
       type: 'array',
-      of: [{ type: 'string' }],
-      options: {
-        list: [
-          { title: 'Spring', value: 'spring' },
-          { title: 'Summer', value: 'summer' },
-          { title: 'Fall', value: 'fall' },
-          { title: 'Winter', value: 'winter' },
-          { title: 'All Season', value: 'all-season' },
-        ],
-      },
+      of: [{ type: 'reference', to: [{ type: 'season' }] }],
     },
     {
       name: 'tags',
       title: 'Tags',
       type: 'array',
-      of: [{ type: 'string' }],
-      options: {
-        list: [
-          { title: 'New Arrival', value: 'new-arrival' },
-          { title: 'Best Seller', value: 'best-seller' },
-          { title: 'Limited Edition', value: 'limited-edition' },
-          { title: 'Eco Friendly', value: 'eco-friendly' },
-          { title: 'Premium', value: 'premium' },
-          { title: 'Trending', value: 'trending' },
-          { title: 'Sale', value: 'sale' },
-        ],
-      },
+      of: [{ type: 'reference', to: [{ type: 'tag' }] }],
     },
     {
       name: 'priceRange',
@@ -239,6 +199,59 @@ const productSchema = {
         ],
       },
       description: 'Auto-calculated based on price, but can be overridden',
+    },
+    {
+      name: 'variants',
+      title: 'Product Variants (Stock Control)',
+      type: 'array',
+      description: 'Define specific combinations (e.g. Red + XL) and their stock status. Overrides general In Stock setting.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'color',
+              title: 'Color',
+              type: 'string', // matching the string colors used in the simple array
+              description: 'Must match one of the colors defined above',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'size',
+              title: 'Size',
+              type: 'string',
+              description: 'Must match one of the sizes defined above',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'inStock',
+              title: 'In Stock',
+              type: 'boolean',
+              initialValue: true,
+            },
+            {
+              name: 'stock',
+              title: 'Stock Quantity',
+              type: 'number',
+              description: 'Optional: Specific count',
+            }
+          ],
+          preview: {
+            select: {
+              color: 'color',
+              size: 'size',
+              inStock: 'inStock',
+              stock: 'stock'
+            },
+            prepare({ color, size, inStock, stock }: any) {
+              return {
+                title: `${color || 'No Color'} - ${size || 'No Size'}`,
+                subtitle: inStock ? (stock ? `In Stock (${stock})` : 'In Stock') : 'Out of Stock'
+              }
+            }
+          }
+        }
+      ]
     },
     {
       name: 'weight',

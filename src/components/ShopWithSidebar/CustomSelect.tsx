@@ -1,22 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const CustomSelect = ({ options }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
-  const selectRef = useRef(null);
+interface Option {
+  label: string;
+  value: string;
+}
 
-  // Function to close the dropdown when a click occurs outside the component
-  const handleClickOutside = (event) => {
-    if (selectRef.current && !selectRef.current.contains(event.target)) {
+interface CustomSelectProps {
+  options: Option[];
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+const CustomSelect = ({ options, value, onChange }: CustomSelectProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  // Find selected option object based on value, or default to first
+  const selectedOption = value
+    ? options.find(opt => opt.value === value) || options[0]
+    : options[0];
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
       setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    // Add a click event listener to the document
     document.addEventListener("click", handleClickOutside);
-
-    // Clean up the event listener when the component unmounts
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -26,9 +37,11 @@ const CustomSelect = ({ options }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    toggleDropdown();
+  const handleOptionClick = (option: Option) => {
+    if (onChange) {
+      onChange(option.value);
+    }
+    setIsOpen(false);
   };
 
   return (
@@ -37,21 +50,19 @@ const CustomSelect = ({ options }) => {
       ref={selectRef}
     >
       <div
-        className={`select-selected whitespace-nowrap ${
-          isOpen ? "select-arrow-active" : ""
-        }`}
+        className={`select-selected whitespace-nowrap ${isOpen ? "select-arrow-active" : ""
+          }`}
         onClick={toggleDropdown}
       >
         {selectedOption.label}
       </div>
       <div className={`select-items ${isOpen ? "" : "select-hide"}`}>
-        {options.slice(1).map((option, index) => (
+        {options.map((option, index) => (
           <div
             key={index}
             onClick={() => handleOptionClick(option)}
-            className={`select-item ${
-              selectedOption === option ? "same-as-selected" : ""
-            }`}
+            className={`select-item ${selectedOption.value === option.value ? "same-as-selected" : ""
+              }`}
           >
             {option.label}
           </div>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from "framer-motion"
 import { Product } from '@/types/product'
 
 interface ProductImageGalleryProps {
@@ -54,7 +55,7 @@ export default function ProductImageGallery({
   }
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === 0 ? currentImages.length - 1 : prev - 1
     )
   }
@@ -91,21 +92,32 @@ export default function ProductImageGallery({
     <div className="space-y-4">
       {/* Main Image */}
       <div className="relative aspect-square bg-danios-neutral rounded-lg overflow-hidden group">
-        <Image
-          src={currentImages[currentImageIndex]}
-          alt={`${product.title}${selectedColor ? ` in ${selectedColor.name}` : ''}`}
-          fill
-          className="object-cover cursor-pointer transition-transform duration-300 group-hover:scale-105"
-          onClick={handleImageClick}
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-        
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentImages[currentImageIndex]}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative w-full h-full"
+          >
+            <Image
+              src={currentImages[currentImageIndex]}
+              alt={`${product.title}${selectedColor ? ` in ${selectedColor.name}` : ''}`}
+              fill
+              className="object-cover cursor-pointer transition-transform duration-300 group-hover:scale-105"
+              onClick={handleImageClick}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </motion.div>
+        </AnimatePresence>
+
         {/* Navigation Arrows */}
         {currentImages.length > 1 && (
           <>
             <button
               onClick={handlePrevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all duration-200 opacity-0 group-hover:opacity-100"
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
             >
               <svg className="w-5 h-5 text-danios-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -113,7 +125,7 @@ export default function ProductImageGallery({
             </button>
             <button
               onClick={handleNextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all duration-200 opacity-0 group-hover:opacity-100"
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
             >
               <svg className="w-5 h-5 text-danios-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -124,14 +136,14 @@ export default function ProductImageGallery({
 
         {/* Image Counter */}
         {currentImages.length > 1 && (
-          <div className="absolute bottom-4 right-4 px-3 py-1 bg-black/50 text-white text-sm rounded-full">
+          <div className="absolute bottom-4 right-4 px-3 py-1 bg-black/50 text-white text-sm rounded-full z-10">
             {currentImageIndex + 1} / {currentImages.length}
           </div>
         )}
 
         {/* Color Indicator */}
         {selectedColor && (
-          <div className="absolute top-4 left-4 flex items-center space-x-2 px-3 py-1 bg-white/90 rounded-full">
+          <div className="absolute top-4 left-4 flex items-center space-x-2 px-3 py-1 bg-white/90 rounded-full z-10">
             <div
               className="w-4 h-4 rounded-full border border-gray-300"
               style={{ backgroundColor: selectedColor.value }}
@@ -150,11 +162,10 @@ export default function ProductImageGallery({
             <button
               key={index}
               onClick={() => handleThumbnailClick(index)}
-              className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                index === currentImageIndex
-                  ? 'border-danios-black'
-                  : 'border-gray-300 hover:border-danios-black'
-              }`}
+              className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${index === currentImageIndex
+                ? 'border-danios-black'
+                : 'border-gray-300 hover:border-danios-black'
+                }`}
             >
               <Image
                 src={image}

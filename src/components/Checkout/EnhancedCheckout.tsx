@@ -14,16 +14,16 @@ interface CheckoutFormData {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
-  
+
   // Delivery Info
   deliveryAddress: string;
   deliveryCity: string;
   deliveryPostalCode: string;
   deliveryInstructions: string;
-  
+
   // Payment
   paymentMethod: 'esewa' | 'cod' | 'bank_transfer';
-  
+
   // Other
   orderNotes: string;
 }
@@ -33,7 +33,7 @@ const EnhancedCheckout: React.FC = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cartReducer.items);
   const totalPrice = useAppSelector(selectTotalPrice);
-  
+
   const [formData, setFormData] = useState<CheckoutFormData>({
     customerName: '',
     customerEmail: '',
@@ -45,7 +45,7 @@ const EnhancedCheckout: React.FC = () => {
     paymentMethod: 'esewa',
     orderNotes: '',
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -71,7 +71,7 @@ const EnhancedCheckout: React.FC = () => {
       ...prev,
       [name]: value,
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
@@ -88,23 +88,23 @@ const EnhancedCheckout: React.FC = () => {
     if (!formData.customerName.trim()) {
       newErrors.customerName = 'Full name is required';
     }
-    
+
     if (!formData.customerEmail.trim()) {
       newErrors.customerEmail = 'Email address is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.customerEmail)) {
       newErrors.customerEmail = 'Please enter a valid email address';
     }
-    
+
     if (!formData.customerPhone.trim()) {
       newErrors.customerPhone = 'Phone number is required';
     } else if (!/^[0-9+\-\s()]+$/.test(formData.customerPhone)) {
       newErrors.customerPhone = 'Please enter a valid phone number';
     }
-    
+
     if (!formData.deliveryAddress.trim()) {
       newErrors.deliveryAddress = 'Delivery address is required';
     }
-    
+
     if (!formData.deliveryCity.trim()) {
       newErrors.deliveryCity = 'City is required';
     }
@@ -121,7 +121,7 @@ const EnhancedCheckout: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       toast.error('Please fix the errors below');
       return;
@@ -153,6 +153,7 @@ const EnhancedCheckout: React.FC = () => {
         unitPrice: item.discountedPrice,
         totalPrice: item.discountedPrice * item.quantity,
         productImage: item.imgs?.thumbnails?.[0] || item.imgs?.previews?.[0],
+        selectedVariants: item.selectedVariants,
       }));
 
       const orderData: CreateOrderData = {
@@ -309,10 +310,10 @@ const EnhancedCheckout: React.FC = () => {
               className="inline-flex items-center justify-center gap-3 bg-white border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-gray-400 hover:shadow-md transition-all duration-200"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
               Continue with Google
             </button>
@@ -355,7 +356,7 @@ const EnhancedCheckout: React.FC = () => {
         <div className="space-y-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h2 className="text-xl font-semibold mb-6">Customer Information</h2>
-            
+
             <div className="space-y-4">
               <div>
                 <label htmlFor="customerName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -367,9 +368,8 @@ const EnhancedCheckout: React.FC = () => {
                   name="customerName"
                   value={formData.customerName}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${
-                    errors.customerName ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.customerName ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   placeholder="Enter your full name"
                 />
                 {errors.customerName && (
@@ -387,9 +387,8 @@ const EnhancedCheckout: React.FC = () => {
                   name="customerEmail"
                   value={formData.customerEmail}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${
-                    errors.customerEmail ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.customerEmail ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   placeholder="Enter your email address"
                 />
                 {errors.customerEmail && (
@@ -407,9 +406,8 @@ const EnhancedCheckout: React.FC = () => {
                   name="customerPhone"
                   value={formData.customerPhone}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${
-                    errors.customerPhone ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.customerPhone ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   placeholder="Enter your phone number"
                 />
                 {errors.customerPhone && (
@@ -421,7 +419,7 @@ const EnhancedCheckout: React.FC = () => {
 
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h2 className="text-xl font-semibold mb-6">Delivery Information</h2>
-            
+
             <div className="space-y-4">
               <div>
                 <label htmlFor="deliveryAddress" className="block text-sm font-medium text-gray-700 mb-1">
@@ -433,9 +431,8 @@ const EnhancedCheckout: React.FC = () => {
                   value={formData.deliveryAddress}
                   onChange={handleInputChange}
                   rows={3}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${
-                    errors.deliveryAddress ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.deliveryAddress ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   placeholder="Enter your complete delivery address"
                 />
                 {errors.deliveryAddress && (
@@ -454,9 +451,8 @@ const EnhancedCheckout: React.FC = () => {
                     name="deliveryCity"
                     value={formData.deliveryCity}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${
-                      errors.deliveryCity ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-danios-black ${errors.deliveryCity ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     placeholder="City"
                   />
                   {errors.deliveryCity && (
@@ -502,7 +498,7 @@ const EnhancedCheckout: React.FC = () => {
         <div className="space-y-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
-            
+
             <div className="space-y-4">
               {cartItems.map((item) => (
                 <div key={item.id} className="flex items-center space-x-4 py-3 border-b border-gray-100">
@@ -554,7 +550,7 @@ const EnhancedCheckout: React.FC = () => {
 
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h2 className="text-xl font-semibold mb-6">Payment Method</h2>
-            
+
             <div className="space-y-3">
               <label className="flex items-center space-x-3 cursor-pointer">
                 <input
@@ -601,11 +597,34 @@ const EnhancedCheckout: React.FC = () => {
                 />
                 <div className="flex items-center space-x-2">
                   <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                   </svg>
                   <span>Bank Transfer</span>
                 </div>
               </label>
+
+              {/* Bank Transfer Details Section */}
+              {formData.paymentMethod === 'bank_transfer' && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="flex flex-col items-center">
+                    <p className="font-medium text-gray-900 mb-2">Scan QR to Compelte Payment</p>
+                    <div className="w-48 h-48 bg-white p-2 rounded-lg shadow-sm border border-gray-200 mb-3 relative">
+                      <Image
+                        src="/images/bank-qr.jpg"
+                        alt="Bank QR Code"
+                        width={192}
+                        height={192}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div className="text-center text-sm text-gray-600 space-y-1">
+                      <p><span className="font-medium">Bank Name:</span> Nabil Bank</p>
+                      <p><span className="font-medium">Account Name:</span> Shreya&apos;s Fashion Pvt. Ltd.</p>
+                      <p><span className="font-medium">Account Number:</span> 1234567890</p>
+                      <p className="text-xs text-gray-500 mt-2">Please declare the order total amount: {formatPrice(finalTotal)}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="mt-6">
@@ -627,18 +646,17 @@ const EnhancedCheckout: React.FC = () => {
               type="submit"
               onClick={handleSubmit}
               disabled={isSubmitting || cartItems.length === 0}
-              className={`w-full mt-6 py-3 px-4 rounded-md font-medium transition-all duration-200 ${
-                isSubmitting || cartItems.length === 0
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-danios-black text-white hover:bg-danios-text hover:shadow-lg transform hover:-translate-y-0.5'
-              }`}
+              className={`w-full mt-6 py-3 px-4 rounded-md font-medium transition-all duration-200 ${isSubmitting || cartItems.length === 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-danios-black text-white hover:bg-danios-text hover:shadow-lg transform hover:-translate-y-0.5'
+                }`}
             >
               {isSubmitting ? 'Processing...' : `Place Order - ${formatPrice(finalTotal)}`}
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

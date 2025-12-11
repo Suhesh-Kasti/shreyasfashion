@@ -15,6 +15,7 @@ type CartItem = {
     thumbnails: string[];
     previews: string[];
   };
+  selectedVariants?: Record<string, string>;
 };
 
 const initialState: InitialState = {
@@ -26,12 +27,19 @@ export const cart = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
-      const { id, title, price, quantity, discountedPrice, imgs } =
+      const { id, title, price, quantity, discountedPrice, imgs, selectedVariants } =
         action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
 
-      if (existingItem) {
-        existingItem.quantity += quantity;
+      // Create a unique key for the item based on ID and variants
+      // This ensures different variants of the same product are treated as separate items
+      const existingItemIndex = state.items.findIndex(
+        (item) =>
+          item.id === id &&
+          JSON.stringify(item.selectedVariants) === JSON.stringify(selectedVariants)
+      );
+
+      if (existingItemIndex !== -1) {
+        state.items[existingItemIndex].quantity += quantity;
       } else {
         state.items.push({
           id,
@@ -40,6 +48,7 @@ export const cart = createSlice({
           quantity,
           discountedPrice,
           imgs,
+          selectedVariants,
         });
       }
     },

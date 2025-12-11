@@ -64,27 +64,28 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
       {/* Search Toggle Button */}
       <button
         onClick={toggleSearch}
-        className="p-2 text-danios-text hover:text-danios-black transition-colors group"
+        className="p-2 text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors group"
         aria-label="Search products"
       >
-        <svg 
-          className="w-5 h-5 group-hover:scale-110 transition-transform" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="w-5 h-5 group-hover:scale-110 transition-transform"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>
       </button>
 
       {/* Search Dropdown */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-80 sm:w-72 xs:w-64 bg-white border border-danios-neutral-2 shadow-lg rounded-lg z-50 max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] lg:max-w-none transform -translate-x-2 sm:-translate-x-4 lg:translate-x-0">
+
+        <div className="fixed inset-x-4 top-20 z-50 lg:absolute lg:top-full lg:right-0 lg:left-auto lg:mt-2 lg:w-80 bg-white dark:bg-gray-900 border border-danios-neutral-2 dark:border-gray-700 shadow-lg rounded-lg">
           <div className="p-4">
             <form onSubmit={handleSearch}>
               <div className="relative">
@@ -94,12 +95,12 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
                   value={searchQuery}
                   onChange={handleInputChange}
                   placeholder="Search for products..."
-                  className="w-full pl-4 pr-12 py-3 border border-danios-neutral-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-danios-accent focus:border-transparent"
+                  className="w-full pl-4 pr-12 py-3 bg-white dark:bg-gray-800 text-black dark:text-white border border-danios-neutral-2 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-danios-accent focus:border-transparent"
                 />
                 <button
                   type="submit"
                   disabled={!searchQuery.trim() || isLoading}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-danios-text hover:text-danios-black disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-danios-text dark:text-gray-400 hover:text-danios-black dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <div className="w-4 h-4 border-2 border-danios-accent border-t-transparent rounded-full animate-spin"></div>
@@ -113,28 +114,28 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
             </form>
 
             {/* Quick Links */}
-            <div className="mt-4 pt-4 border-t border-danios-neutral-2">
-              <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
+            <div className="mt-4 pt-4 border-t border-danios-neutral-2 dark:border-gray-800">
+              <p className="text-sm text-danios-text-muted dark:text-gray-500 mb-3 uppercase tracking-wider">
                 Quick Search
               </p>
               <div className="space-y-2">
                 <Link
                   href="/shop-collection?category=sweatshirts"
-                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
+                  className="block text-sm text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Sweatshirts
                 </Link>
                 <Link
                   href="/shop-collection?category=tshirts"
-                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
+                  className="block text-sm text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   T-Shirts
                 </Link>
                 <Link
                   href="/shop-collection?category=pants"
-                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
+                  className="block text-sm text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Pants
@@ -143,8 +144,8 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
             </div>
 
             {/* Popular Searches */}
-            <div className="mt-4 pt-4 border-t border-danios-neutral-2">
-              <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
+            <div className="mt-4 pt-4 border-t border-danios-neutral-2 dark:border-gray-800">
+              <p className="text-sm text-danios-text-muted dark:text-gray-500 mb-3 uppercase tracking-wider">
                 Popular
               </p>
               <div className="flex flex-wrap gap-2">
@@ -153,9 +154,9 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
                     key={term}
                     onClick={() => {
                       setSearchQuery(term);
-                      handleSearch({ preventDefault: () => {} } as React.FormEvent);
+                      handleSearch({ preventDefault: () => { } } as React.FormEvent);
                     }}
-                    className="px-3 py-1 text-xs bg-danios-neutral text-danios-text hover:bg-danios-neutral-2 transition-colors rounded-full"
+                    className="px-3 py-1 text-xs bg-danios-neutral dark:bg-gray-800 text-danios-text dark:text-gray-300 hover:bg-danios-neutral-2 dark:hover:bg-gray-700 transition-colors rounded-full"
                   >
                     {term}
                   </button>
@@ -168,7 +169,7 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
 
       {/* Overlay for mobile */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/20 z-40 lg:hidden"
           onClick={() => setIsOpen(false)}
         />

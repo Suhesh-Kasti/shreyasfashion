@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { addItemToCart } from "@/redux/features/cart-slice";
 import { addItemToWishlist, removeItemFromWishlist } from "@/redux/features/wishlist-slice";
 import { Product } from "@/types/product";
-// Using SVG icons instead of Heroicons
 import ProductImageGallery from "./ProductImageGallery";
 import ProductVariants from "./ProductVariants";
 import ProductReviews from "./ProductReviews";
@@ -88,6 +87,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
   const handleAddToCart = () => {
     if (!product) return;
 
+    // Check stock status
+    if (!product.inStock || (product.quantity !== undefined && product.quantity < 1)) {
+      toast.error("Sorry, this item is out of stock");
+      return;
+    }
+
     dispatch(addItemToCart({
       id: product.id,
       title: product.title,
@@ -165,7 +170,7 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
     <>
       {product && (
         <>
-          <section className="overflow-hidden bg-white py-8 lg:py-12">
+          <section className="overflow-hidden bg-white dark:bg-gray-800 py-8 lg:py-12 transition-colors duration-300">
             <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 {/* Product Images */}
@@ -193,67 +198,71 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                     )}
                   </div>
 
-                  <h1 className="font-bold text-3xl xl:text-4xl text-black mb-4">
+                  <h1 className="font-bold text-3xl xl:text-4xl text-black dark:text-white mb-4">
                     {product.title}
                   </h1>
 
                   <div className="flex items-center gap-4 mb-6">
                     <div className="flex items-center gap-2">
-                      <span className="text-3xl font-bold text-black">
-                        {formatPrice(product.discountedPrice || product.price)}
+                      <span className="text-3xl font-bold text-black dark:text-gray-100">
+                        Rs. {formatPrice(product.price)}
                       </span>
-                      {product.discountedPrice && product.price > product.discountedPrice && (
-                        <span className="text-xl text-gray-400 line-through">
-                          {formatPrice(product.price)}
+                      {product.discountedPrice && (
+                        <span className="text-xl text-gray-500 dark:text-gray-400 line-through">
+                          Rs. {formatPrice(product.discountedPrice)}
                         </span>
                       )}
                     </div>
+                    <div className="flex items-center">
+                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${product.inStock
+                        ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                        : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+                        }`}>
+                        {product.inStock
+                          ? (product.quantity ? `${product.quantity} in Stock` : "In Stock")
+                          : "Out of Stock"}
+                      </span>
+                    </div>
                   </div>
 
-                  {product.description && (
-                    <p className="text-gray-600 mb-8 leading-relaxed">
-                      {product.description}
-                    </p>
-                  )}
+                  <p className="mb-8 text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {product.description?.slice(0, 150)}...
+                  </p>
 
-                  {/* Product Variants */}
                   <ProductVariants
                     product={product}
-                    onVariantChange={(variant) => {
-                      if (variant.size) setSelectedSize(variant.size);
-                      if (variant.color) {
-                        const colorName = typeof variant.color === 'string' ? variant.color : variant.color.name;
-                        setSelectedColor(colorName);
-                      }
-                      if (variant.quantity) setQuantity(variant.quantity);
-                    }}
+                    selectedSize={selectedSize}
+                    selectedColor={selectedColor}
+                    onSizeChange={setSelectedSize}
+                    onColorChange={setSelectedColor}
+                    onQuantityChange={setQuantity}
                   />
 
-                  {/* Action Buttons */}
                   <div className="flex items-center gap-4 mb-8">
                     <button
                       onClick={handleAddToCart}
-                      className="flex-1 bg-black text-white py-3 px-6 font-medium hover:bg-gray-800 transition-colors duration-300 flex items-center justify-center gap-2 rounded-lg"
+                      disabled={!product.inStock || (product.quantity !== undefined && product.quantity < 1)}
+                      className={`flex-1 text-white py-3 px-6 font-medium transition-colors duration-300 flex items-center justify-center gap-2 rounded-lg ${!product.inStock || (product.quantity !== undefined && product.quantity < 1)
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-black hover:bg-gray-800 dark:hover:bg-gray-700"
+                        }`}
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5" />
                       </svg>
                       Add to Cart
                     </button>
-
                     <button
                       onClick={handleWishlistToggle}
-                      className="p-3 border border-gray-300 hover:bg-gray-100 transition-colors duration-300 rounded-lg"
+                      className={`p-3 border rounded-lg transition-colors duration-300 ${isInWishlist(product.id.toString())
+                        ? "bg-red-50 border-red-200 text-red-500 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400"
+                        : "border-gray-300 hover:border-black text-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:border-white"
+                        }`}
+                      aria-label="Add to Wishlist"
                     >
-                      {isInWishlist(product.id.toString()) ? (
-                        <svg className="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                      ) : (
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                      )}
+                      <svg className={`w-6 h-6 ${isInWishlist(product.id.toString()) ? "fill-current" : "fill-none"}`} stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
                     </button>
                   </div>
 
@@ -261,21 +270,20 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                 </div>
               </div>
             </div>
-          </section>
+          </section >
 
-          <section className="overflow-hidden bg-gray-2 py-20">
+          <section className="overflow-hidden bg-gray-2 dark:bg-gray-900 py-20 transition-colors duration-300">
             <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
               {/* Tab Header */}
-              <div className="flex flex-wrap items-center bg-white rounded-[10px] shadow-1 gap-5 xl:gap-12.5 py-4.5 px-4 sm:px-6">
+              <div className="flex flex-wrap items-center bg-white dark:bg-gray-800 rounded-[10px] shadow-1 gap-5 xl:gap-12.5 py-4.5 px-4 sm:px-6 transition-colors duration-300">
                 {tabs.map((item, key) => (
                   <button
                     key={key}
                     onClick={() => setActiveTab(item.id)}
-                    className={`font-medium text-lg ease-out duration-200 ${
-                      activeTab === item.id
-                        ? "text-black border-b-2 border-black"
-                        : "text-gray-600 hover:text-black"
-                    }`}
+                    className={`font-medium text-lg ease-out duration-200 ${activeTab === item.id
+                      ? "text-black dark:text-white border-b-2 border-black dark:border-white"
+                      : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+                      }`}
                   >
                     {item.label}
                   </button>
@@ -285,17 +293,16 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
               {/* Description Tab */}
               <div>
                 <div
-                  className={`rounded-xl bg-white shadow-1 p-4 sm:p-6 mt-10 ${
-                    activeTab === "tabOne" ? "block" : "hidden"
-                  }`}
+                  className={`rounded-xl bg-white dark:bg-gray-800 shadow-1 p-4 sm:p-6 mt-10 transition-colors duration-300 ${activeTab === "tabOne" ? "block" : "hidden"
+                    }`}
                 >
-                  <div className="prose max-w-none">
+                  <div className="prose max-w-none dark:prose-invert">
                     {product.description ? (
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                         {product.description}
                       </p>
                     ) : (
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                         This premium {product.title.toLowerCase()} is crafted with attention to detail and quality.
                         Perfect for everyday wear, it combines comfort with style to create a versatile piece
                         that fits seamlessly into your wardrobe.
@@ -308,18 +315,17 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
               {/* Additional Information Tab */}
               <div>
                 <div
-                  className={`rounded-xl bg-white shadow-1 p-4 sm:p-6 mt-10 ${
-                    activeTab === "tabTwo" ? "block" : "hidden"
-                  }`}
+                  className={`rounded-xl bg-white dark:bg-gray-800 shadow-1 p-4 sm:p-6 mt-10 transition-colors duration-300 ${activeTab === "tabTwo" ? "block" : "hidden"
+                    }`}
                 >
                   {/* Brand */}
                   {(product.additionalInfo?.brand || getBrandName()) && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Brand</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Brand</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {product.additionalInfo?.brand || getBrandName()}
                         </p>
                       </div>
@@ -328,12 +334,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Material */}
                   {product.material && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Material</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Material</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {product.material}
                         </p>
                       </div>
@@ -342,12 +348,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Fit */}
                   {product.additionalInfo?.fit && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Fit</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Fit</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {product.additionalInfo.fit.charAt(0).toUpperCase() + product.additionalInfo.fit.slice(1)} Fit
                         </p>
                       </div>
@@ -356,12 +362,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Gender */}
                   {product.gender && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Gender</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Gender</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {product.gender.charAt(0).toUpperCase() + product.gender.slice(1)}
                         </p>
                       </div>
@@ -370,12 +376,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Season */}
                   {product.season && product.season.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Season</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Season</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {Array.isArray(product.season) ? product.season.join(', ') : product.season}
                         </p>
                       </div>
@@ -384,12 +390,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Made In */}
                   {(product.additionalInfo?.origin || BRAND_CONFIG.country) && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Made In</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Made In</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {product.additionalInfo?.origin || BRAND_CONFIG.country}
                         </p>
                       </div>
@@ -398,12 +404,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Care Instructions */}
                   {product.additionalInfo?.careInstructions && product.additionalInfo.careInstructions.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Care Instructions</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Care Instructions</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {Array.isArray(product.additionalInfo?.careInstructions)
                             ? product.additionalInfo.careInstructions.join(', ')
                             : product.additionalInfo?.careInstructions || 'N/A'
@@ -415,12 +421,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Weight */}
                   {product.weight && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Weight</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Weight</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {product.weight}g
                         </p>
                       </div>
@@ -429,12 +435,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Sustainability */}
                   {product.additionalInfo?.sustainability && product.additionalInfo.sustainability.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Sustainability</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Sustainability</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {Array.isArray(product.additionalInfo?.sustainability)
                             ? product.additionalInfo.sustainability.join(', ')
                             : product.additionalInfo?.sustainability || 'N/A'
@@ -446,12 +452,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Available Sizes */}
                   {product.sizes && product.sizes.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Available Sizes</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Available Sizes</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {Array.isArray(product.sizes) && product.sizes.length > 0
                             ? product.sizes.join(', ').toUpperCase()
                             : 'N/A'
@@ -463,15 +469,15 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Available Colors */}
                   {product.colors && product.colors.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark">Available Colors</p>
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Available Colors</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark">
+                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
                           {Array.isArray(product.colors) && typeof product.colors[0] === 'string'
                             ? (product.colors as string[]).join(', ')
-                            : (product.colors as Array<{name: string}>).map(color => color.name).join(', ')
+                            : (product.colors as Array<{ name: string }>).map(color => color.name).join(', ')
                           }
                         </p>
                       </div>
@@ -483,9 +489,8 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
               {/* Reviews Tab */}
               <div>
                 <div
-                  className={`mt-12.5 ${
-                    activeTab === "tabThree" ? "block" : "hidden"
-                  }`}
+                  className={`mt-12.5 ${activeTab === "tabThree" ? "block" : "hidden"
+                    }`}
                 >
                   <ProductReviews product={product} />
                 </div>

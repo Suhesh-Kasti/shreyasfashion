@@ -8,6 +8,10 @@ import author from './author'
 import promotion from './promotion'
 import quickview from './quickview'
 import seller from './seller'
+import material from './material'
+import style from './style'
+import season from './season'
+import tag from './tag'
 
 export const schemaTypes = [
   // Main e-commerce types
@@ -31,4 +35,8 @@ export const schemaTypes = [
 
   // Configuration types
   siteSettings,
+  material,
+  style,
+  season,
+  tag,
 ]

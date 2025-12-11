@@ -8,31 +8,31 @@ export const BRAND_CONFIG = {
   typingWords: ["Shreya's", "Fashion", "Style", "Nepal"],
   tagline: "Premium streetwear crafted in Nepal",
   description: "Premium streetwear crafted in Nepal by Shreya Ghimire. Quality clothing that celebrates heritage while embracing modernity.",
-  
+
   // Founder/Company Info
   founder: "Shreya Ghimire",
   country: "Nepal",
-  
+
   // Contact & Social
   email: "hello@shreyasfashion.com",
   phone: "+977-9763623022",
   address: "Kathmandu, Nepal",
-  
+
   // Social Media
   social: {
-    instagram: "https://instagram.com/shreyasfashion",
-    facebook: "https://facebook.com/shreyasfashion",
-    twitter: "https://twitter.com/shreyasfashion",
-    tiktok: "https://tiktok.com/@shreyasfashion",
+    instagram: "https://www.instagram.com",
+    facebook: "https://www.facebook.com",
+    twitter: "https://twitter.com",
+    tiktok: "https://www.tiktok.com",
   },
-  
+
   // SEO & Meta
   seo: {
     title: "Premium Streetwear. Made in Nepal",
     description: "Discover premium streetwear crafted in Nepal. Quality clothing that celebrates heritage while embracing modernity.",
     keywords: "streetwear, nepal, fashion, premium, clothing",
   },
-  
+
   // Hero Section Defaults
   hero: {
     title: "Elevate Your Everyday",
@@ -40,14 +40,14 @@ export const BRAND_CONFIG = {
     ctaText: "Shop Collection",
     secondaryCtaText: "Our Story",
   },
-  
+
   // Brand Stats/Features
   features: [
     { value: "100%", label: "Premium Cotton" },
     { value: "Made", label: "in Nepal" },
     { value: "Free", label: "Shipping" },
   ],
-  
+
   // Navigation Menu
   navigation: [
     { name: "Shop", href: "/shop-collection" },
@@ -56,7 +56,7 @@ export const BRAND_CONFIG = {
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ],
-  
+
   // Footer Links
   footerLinks: {
     help: [
@@ -79,14 +79,14 @@ export const BRAND_CONFIG = {
       { name: "Sale", href: "/shop-collection?filter=sale" },
     ],
   },
-  
+
   // Payment Methods
   paymentMethods: [
     { name: "e-Sewa", icon: "esewa", color: "green" },
     { name: "Khalti", icon: "khalti", color: "purple" },
     { name: "Cash on Delivery", icon: "cod", color: "blue" },
   ],
-  
+
   // PWA Configuration
   pwa: {
     name: "Shreya's Fashion",
@@ -98,11 +98,11 @@ export const BRAND_CONFIG = {
     display: "standalone",
     orientation: "portrait",
   },
-  
+
   // Theme Colors (for CSS variables)
   colors: {
     primary: "#000000",
-    secondary: "#ffffff", 
+    secondary: "#ffffff",
     accent: "#f5f5f5",
     text: "#333333",
     textLight: "#666666",
