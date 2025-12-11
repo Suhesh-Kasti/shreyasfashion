@@ -8,7 +8,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class",
+  // darkMode: "class", // Removed
   theme: {
     fontFamily: {
       "euclid-circular-a": ["Euclid Circular A"],
@@ -65,8 +65,6 @@ const config: Config = {
         5: "#9CA3AF",
         6: "#6B7280",
         7: "#374151",
-        800: "#1F2937",
-        900: "#111827",
       },
       blue: {
         DEFAULT: "#3C50E0",

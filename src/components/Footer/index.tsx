@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="max-w-[330px] w-full">
             {/* Brand Section */}
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-brand-black dark:text-white mb-4 tracking-tight">
+              <h2 className="text-3xl font-bold text-brand-black mb-4 tracking-tight">
                 {getBrandName()}
               </h2>
               <p className="text-brand-text-light dark:text-gray-400 leading-relaxed mb-4">
@@ -20,13 +20,13 @@ const Footer = () => {
               </p>
             </div>
 
-            <h3 className="mb-7.5 text-custom-1 font-medium text-dark dark:text-white">
+            <h3 className="mb-7.5 text-custom-1 font-medium text-dark">
               Help & Support
             </h3>
 
             <ul className="flex flex-col gap-3">
               <li className="flex gap-4.5">
-                <span className="flex-shrink-0 text-brand-black dark:text-gray-400">
+                <span className="flex-shrink-0 text-brand-black">
                   <svg
                     width="24"
                     height="24"
@@ -42,7 +42,7 @@ const Footer = () => {
                     />
                   </svg>
                 </span>
-                <span className="text-brand-text dark:text-gray-400">Kathmandu, Nepal, 44600</span>
+                <span className="text-brand-text">Kathmandu, Nepal, 44600</span>
               </li>
 
               <li>
@@ -71,7 +71,7 @@ const Footer = () => {
                       fill="#3C50E0"
                     />
                   </svg>
-                  <span className="text-brand-text dark:text-gray-400">(+977) 98-1234-5678</span>
+                  <span className="text-brand-text">(+977) 98-1234-5678</span>
                 </a>
               </li>
 
@@ -91,7 +91,7 @@ const Footer = () => {
                       fill="#3C50E0"
                     />
                   </svg>
-                  <span className="text-brand-text dark:text-gray-400">{getBrandEmail()}</span>
+                  <span className="text-brand-text">{getBrandEmail()}</span>
                 </a>
               </li>
             </ul>
@@ -207,33 +207,33 @@ const Footer = () => {
           </div>
 
           <div className="w-full sm:w-auto">
-            <h2 className="mb-7.5 text-custom-1 font-medium text-dark dark:text-white">
+            <h2 className="mb-7.5 text-custom-1 font-medium text-dark">
               Account
             </h2>
 
             <ul className="flex flex-col gap-3.5">
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   My Account
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Login / Register
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Cart
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Wishlist
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Shop
                 </a>
               </li>
@@ -241,33 +241,33 @@ const Footer = () => {
           </div>
 
           <div className="w-full sm:w-auto">
-            <h2 className="mb-7.5 text-custom-1 font-medium text-dark dark:text-white">
+            <h2 className="mb-7.5 text-custom-1 font-medium text-dark">
               Quick Link
             </h2>
 
             <ul className="flex flex-col gap-3">
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Refund Policy
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Terms of Use
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   FAQ’s
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text dark:text-gray-400" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
                   Contact
                 </a>
               </li>
@@ -275,11 +275,11 @@ const Footer = () => {
           </div>
 
           <div className="w-full sm:w-auto">
-            <h2 className="mb-7.5 text-custom-1 font-medium text-dark dark:text-white lg:text-right">
+            <h2 className="mb-7.5 text-custom-1 font-medium text-dark lg:text-right">
               Follow Us
             </h2>
 
-            <p className="lg:text-right text-custom-sm mb-4 text-brand-text dark:text-gray-400">
+            <p className="lg:text-right text-custom-sm mb-4 text-brand-text">
               Stay connected for latest updates
             </p>
 
@@ -329,15 +329,15 @@ const Footer = () => {
       </div>
 
       {/* <!-- footer bottom start --> */}
-      <div className="py-5 xl:py-7.5 bg-gray-1 dark:bg-gray-800">
+      <div className="py-5 xl:py-7.5 bg-gray-1">
         <div className="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex gap-5 flex-col lg:flex-row lg:items-center lg:justify-between">
-            <p className="text-dark dark:text-gray-300 font-medium text-center lg:text-left">
+            <p className="text-dark font-medium text-center lg:text-left">
               &copy; {year} {getBrandName()}. All rights reserved by {BRAND_CONFIG.founder}.
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-center lg:justify-end">
-              <p className="font-medium text-center sm:text-left text-brand-black dark:text-white">We Accept:</p>
+              <p className="font-medium text-center sm:text-left text-brand-black">We Accept:</p>
 
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 lg:gap-6">
                 {/* e-Sewa */}

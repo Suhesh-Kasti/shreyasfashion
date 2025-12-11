@@ -10,13 +10,11 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import SearchBar from "./SearchBar";
 import { getBrandName, getNavigation, BRAND_CONFIG } from "@/config/brand";
 import TypingAnimation from "../Common/TypingAnimation";
-import { useTheme } from "next-themes";
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -50,14 +48,14 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 w-full z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-danios-neutral-2 dark:border-gray-800 transition-all ease-in-out duration-300 ${stickyMenu && "shadow-sm dark:shadow-gray-800/20"
+      className={`fixed left-0 top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-danios-neutral-2 transition-all ease-in-out duration-300 ${stickyMenu && "shadow-sm"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link className="flex-shrink-0" href="/">
-            <div className="text-2xl lg:text-3xl font-bold text-brand-black dark:text-white tracking-tight">
+            <div className="text-2xl lg:text-3xl font-bold text-brand-black tracking-tight">
               {/* Desktop: Show full brand name */}
               <span className="hidden sm:block">
                 {getBrandName()}
@@ -66,7 +64,7 @@ const Header = () => {
               <span className="block sm:hidden">
                 <TypingAnimation
                   words={BRAND_CONFIG.typingWords}
-                  className="text-2xl font-bold text-brand-black dark:text-white tracking-tight"
+                  className="text-2xl font-bold text-brand-black tracking-tight"
                   typingSpeed={120}
                   deletingSpeed={80}
                   pauseDuration={1500}
@@ -81,7 +79,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-brand-text dark:text-white hover:text-brand-black dark:hover:text-gray-300 transition-colors duration-200 font-medium"
+                className="text-brand-text hover:text-brand-black transition-colors duration-200 font-medium"
               >
                 {item.name}
               </Link>
@@ -91,7 +89,7 @@ const Header = () => {
           {/* Right Side Icons */}
           <div className="flex items-center space-x-2 lg:space-x-4">
             {/* Wishlist Icon */}
-            <Link href="/wishlist" className="p-2 text-danios-text dark:text-white hover:text-danios-black dark:hover:text-gray-300 transition-colors group">
+            <Link href="/wishlist" className="p-2 text-danios-text hover:text-danios-black transition-colors group">
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
@@ -132,7 +130,7 @@ const Header = () => {
             ) : (
               <button
                 onClick={() => signIn("google")}
-                className="flex items-center gap-2 p-2 text-danios-text dark:text-white hover:text-danios-black dark:hover:text-gray-300 transition-colors"
+                className="flex items-center gap-2 p-2 text-danios-text hover:text-danios-black transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -144,7 +142,7 @@ const Header = () => {
             {/* Cart */}
             <button
               onClick={handleOpenCartModal}
-              className="relative p-2 text-danios-text dark:text-white hover:text-danios-black dark:hover:text-gray-300 transition-colors group"
+              className="relative p-2 text-danios-text hover:text-danios-black transition-colors group"
             >
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5" />
@@ -159,27 +157,12 @@ const Header = () => {
             {/* Search Bar */}
             <SearchBar />
 
-            {/* Theme Toggle */}
-            {/* Theme Toggle - Desktop */}
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="hidden p-2 text-danios-text hover:text-danios-black dark:text-white dark:hover:text-gray-300 transition-colors"
-            >
-              {mounted && theme === "dark" ? (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              )}
-            </button>
+            {/* Theme Toggle - Removed */}
 
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setNavigationOpen(!navigationOpen)}
-              className="lg:hidden p-2 text-danios-text dark:text-white hover:text-danios-black dark:hover:text-gray-300 transition-colors"
+              className="lg:hidden p-2 text-danios-text hover:text-danios-black transition-colors"
             >
               <span className="sr-only">Toggle navigation</span>
               {navigationOpen ? (
@@ -197,13 +180,13 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {navigationOpen && (
-          <div className="lg:hidden border-t border-brand-neutral-2 dark:border-gray-800 bg-white dark:bg-gray-900">
+          <div className="lg:hidden border-t border-brand-neutral-2 bg-white">
             <div className="px-4 py-6 space-y-4">
               {getNavigation().map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block text-brand-text dark:text-white hover:text-brand-black dark:hover:text-gray-300 transition-colors font-medium py-2"
+                  className="block text-brand-text hover:text-brand-black transition-colors font-medium py-2"
                   onClick={() => setNavigationOpen(false)}
                 >
                   {item.name}
@@ -221,21 +204,7 @@ const Header = () => {
                 </button>
               )}
 
-              {/* Mobile Theme Toggle */}
-              <div className="hidden pt-4 border-t border-gray-100 dark:border-gray-800">
-                <button
-                  onClick={() => {
-                    setTheme(theme === "dark" ? "light" : "dark");
-                    setNavigationOpen(false);
-                  }}
-                  className="flex items-center gap-2 w-full text-left text-brand-text hover:text-brand-black transition-colors font-medium py-2"
-                >
-                  <span className="flex-1">Dark Mode</span>
-                  <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${theme === 'dark' ? 'bg-black' : 'bg-gray-200'}`}>
-                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${theme === 'dark' ? 'translate-x-6' : 'translate-x-1'}`} />
-                  </div>
-                </button>
-              </div>
+              {/* Mobile Theme Toggle - Removed */}
             </div>
           </div>
         )}

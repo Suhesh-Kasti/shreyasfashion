@@ -1,6 +1,6 @@
 import { Metadata, Viewport } from 'next'
 import { getBrandName, BRAND_CONFIG } from '@/config/brand'
-import { ThemeProvider } from '@/providers/ThemeProvider'
+
 import PWAInstallPrompt from '@/components/Common/PWAInstallPrompt'
 import { Toaster } from 'react-hot-toast'
 
@@ -95,7 +95,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: BRAND_CONFIG.colors.primary },
-    { media: '(prefers-color-scheme: dark)', color: BRAND_CONFIG.colors.primary },
   ],
   width: 'device-width',
   initialScale: 1,
@@ -123,12 +122,10 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content={BRAND_CONFIG.colors.primary} />
         <meta name="theme-color" content={BRAND_CONFIG.colors.primary} />
       </head>
-      <body className="bg-white text-dark dark:bg-gray-900 dark:text-white transition-colors duration-300">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <PWAInstallPrompt />
-          <Toaster position="bottom-right" />
-        </ThemeProvider>
+      <body className="bg-white text-dark transition-colors duration-300">
+        {children}
+        <PWAInstallPrompt />
+        <Toaster position="bottom-right" />
       </body>
     </html>
   )

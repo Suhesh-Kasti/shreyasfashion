@@ -64,7 +64,7 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
       {/* Search Toggle Button */}
       <button
         onClick={toggleSearch}
-        className="p-2 text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors group"
+        className="p-2 text-danios-text hover:text-danios-black transition-colors group"
         aria-label="Search products"
       >
         <svg
@@ -85,7 +85,7 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
       {/* Search Dropdown */}
       {isOpen && (
 
-        <div className="fixed inset-x-4 top-20 z-50 lg:absolute lg:top-full lg:right-0 lg:left-auto lg:mt-2 lg:w-80 bg-white dark:bg-gray-900 border border-danios-neutral-2 dark:border-gray-700 shadow-lg rounded-lg">
+        <div className="fixed inset-x-4 top-20 z-50 lg:absolute lg:top-full lg:right-0 lg:left-auto lg:mt-2 lg:w-80 bg-white border border-danios-neutral-2 shadow-lg rounded-lg">
           <div className="p-4">
             <form onSubmit={handleSearch}>
               <div className="relative">
@@ -95,12 +95,12 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
                   value={searchQuery}
                   onChange={handleInputChange}
                   placeholder="Search for products..."
-                  className="w-full pl-4 pr-12 py-3 bg-white dark:bg-gray-800 text-black dark:text-white border border-danios-neutral-2 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-danios-accent focus:border-transparent"
+                  className="w-full pl-4 pr-12 py-3 bg-white text-black border border-danios-neutral-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-danios-accent focus:border-transparent"
                 />
                 <button
                   type="submit"
                   disabled={!searchQuery.trim() || isLoading}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-danios-text dark:text-gray-400 hover:text-danios-black dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-danios-text hover:text-danios-black disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <div className="w-4 h-4 border-2 border-danios-accent border-t-transparent rounded-full animate-spin"></div>
@@ -114,28 +114,28 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
             </form>
 
             {/* Quick Links */}
-            <div className="mt-4 pt-4 border-t border-danios-neutral-2 dark:border-gray-800">
-              <p className="text-sm text-danios-text-muted dark:text-gray-500 mb-3 uppercase tracking-wider">
+            <div className="mt-4 pt-4 border-t border-danios-neutral-2">
+              <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
                 Quick Search
               </p>
               <div className="space-y-2">
                 <Link
                   href="/shop-collection?category=sweatshirts"
-                  className="block text-sm text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors"
+                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Sweatshirts
                 </Link>
                 <Link
                   href="/shop-collection?category=tshirts"
-                  className="block text-sm text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors"
+                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   T-Shirts
                 </Link>
                 <Link
                   href="/shop-collection?category=pants"
-                  className="block text-sm text-danios-text dark:text-gray-300 hover:text-danios-black dark:hover:text-white transition-colors"
+                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Pants
@@ -144,8 +144,8 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
             </div>
 
             {/* Popular Searches */}
-            <div className="mt-4 pt-4 border-t border-danios-neutral-2 dark:border-gray-800">
-              <p className="text-sm text-danios-text-muted dark:text-gray-500 mb-3 uppercase tracking-wider">
+            <div className="mt-4 pt-4 border-t border-danios-neutral-2">
+              <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
                 Popular
               </p>
               <div className="flex flex-wrap gap-2">
@@ -156,7 +156,7 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
                       setSearchQuery(term);
                       handleSearch({ preventDefault: () => { } } as React.FormEvent);
                     }}
-                    className="px-3 py-1 text-xs bg-danios-neutral dark:bg-gray-800 text-danios-text dark:text-gray-300 hover:bg-danios-neutral-2 dark:hover:bg-gray-700 transition-colors rounded-full"
+                    className="px-3 py-1 text-xs bg-danios-neutral text-danios-text hover:bg-danios-neutral-2 transition-colors rounded-full"
                   >
                     {term}
                   </button>
@@ -165,16 +165,19 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
             </div>
           </div>
         </div>
-      )}
+      )
+      }
 
       {/* Overlay for mobile */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 z-40 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-    </div>
+      {
+        isOpen && (
+          <div
+            className="fixed inset-0 bg-black/20 z-40 lg:hidden"
+            onClick={() => setIsOpen(false)}
+          />
+        )
+      }
+    </div >
   );
 };
 

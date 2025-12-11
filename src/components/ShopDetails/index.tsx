@@ -170,7 +170,7 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
     <>
       {product && (
         <>
-          <section className="overflow-hidden bg-white dark:bg-gray-800 py-8 lg:py-12 transition-colors duration-300">
+          <section className="overflow-hidden bg-white py-8 lg:py-12 transition-colors duration-300">
             <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 {/* Product Images */}
@@ -198,25 +198,25 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                     )}
                   </div>
 
-                  <h1 className="font-bold text-3xl xl:text-4xl text-black dark:text-white mb-4">
+                  <h1 className="font-bold text-3xl xl:text-4xl text-black mb-4">
                     {product.title}
                   </h1>
 
                   <div className="flex items-center gap-4 mb-6">
                     <div className="flex items-center gap-2">
-                      <span className="text-3xl font-bold text-black dark:text-gray-100">
+                      <span className="text-3xl font-bold text-black">
                         Rs. {formatPrice(product.price)}
                       </span>
                       {product.discountedPrice && (
-                        <span className="text-xl text-gray-500 dark:text-gray-400 line-through">
+                        <span className="text-xl text-gray-500 line-through">
                           Rs. {formatPrice(product.discountedPrice)}
                         </span>
                       )}
                     </div>
                     <div className="flex items-center">
                       <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${product.inStock
-                        ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                        : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
                         }`}>
                         {product.inStock
                           ? (product.quantity ? `${product.quantity} in Stock` : "In Stock")
@@ -225,7 +225,7 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                     </div>
                   </div>
 
-                  <p className="mb-8 text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p className="mb-8 text-gray-600 leading-relaxed">
                     {product.description?.slice(0, 150)}...
                   </p>
 
@@ -243,8 +243,8 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                       onClick={handleAddToCart}
                       disabled={!product.inStock || (product.quantity !== undefined && product.quantity < 1)}
                       className={`flex-1 text-white py-3 px-6 font-medium transition-colors duration-300 flex items-center justify-center gap-2 rounded-lg ${!product.inStock || (product.quantity !== undefined && product.quantity < 1)
-                          ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-black hover:bg-gray-800 dark:hover:bg-gray-700"
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-black hover:bg-gray-800"
                         }`}
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,8 +255,8 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
                     <button
                       onClick={handleWishlistToggle}
                       className={`p-3 border rounded-lg transition-colors duration-300 ${isInWishlist(product.id.toString())
-                        ? "bg-red-50 border-red-200 text-red-500 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400"
-                        : "border-gray-300 hover:border-black text-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:border-white"
+                        ? "bg-red-50 border-red-200 text-red-500"
+                        : "border-gray-300 hover:border-black text-gray-700"
                         }`}
                       aria-label="Add to Wishlist"
                     >
@@ -272,17 +272,17 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
             </div>
           </section >
 
-          <section className="overflow-hidden bg-gray-2 dark:bg-gray-900 py-20 transition-colors duration-300">
+          <section className="overflow-hidden bg-gray-2 py-20 transition-colors duration-300">
             <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
               {/* Tab Header */}
-              <div className="flex flex-wrap items-center bg-white dark:bg-gray-800 rounded-[10px] shadow-1 gap-5 xl:gap-12.5 py-4.5 px-4 sm:px-6 transition-colors duration-300">
+              <div className="flex flex-wrap items-center bg-white rounded-[10px] shadow-1 gap-5 xl:gap-12.5 py-4.5 px-4 sm:px-6 transition-colors duration-300">
                 {tabs.map((item, key) => (
                   <button
                     key={key}
                     onClick={() => setActiveTab(item.id)}
                     className={`font-medium text-lg ease-out duration-200 ${activeTab === item.id
-                      ? "text-black dark:text-white border-b-2 border-black dark:border-white"
-                      : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+                      ? "text-black border-b-2 border-black"
+                      : "text-gray-600 hover:text-black"
                       }`}
                   >
                     {item.label}
@@ -293,16 +293,16 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
               {/* Description Tab */}
               <div>
                 <div
-                  className={`rounded-xl bg-white dark:bg-gray-800 shadow-1 p-4 sm:p-6 mt-10 transition-colors duration-300 ${activeTab === "tabOne" ? "block" : "hidden"
+                  className={`rounded-xl bg-white shadow-1 p-4 sm:p-6 mt-10 transition-colors duration-300 ${activeTab === "tabOne" ? "block" : "hidden"
                     }`}
                 >
-                  <div className="prose max-w-none dark:prose-invert">
+                  <div className="prose max-w-none">
                     {product.description ? (
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed">
                         {product.description}
                       </p>
                     ) : (
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed">
                         This premium {product.title.toLowerCase()} is crafted with attention to detail and quality.
                         Perfect for everyday wear, it combines comfort with style to create a versatile piece
                         that fits seamlessly into your wardrobe.
@@ -315,17 +315,17 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
               {/* Additional Information Tab */}
               <div>
                 <div
-                  className={`rounded-xl bg-white dark:bg-gray-800 shadow-1 p-4 sm:p-6 mt-10 transition-colors duration-300 ${activeTab === "tabTwo" ? "block" : "hidden"
+                  className={`rounded-xl bg-white shadow-1 p-4 sm:p-6 mt-10 transition-colors duration-300 ${activeTab === "tabTwo" ? "block" : "hidden"
                     }`}
                 >
                   {/* Brand */}
                   {(product.additionalInfo?.brand || getBrandName()) && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Brand</p>
+                        <p className="text-sm sm:text-base text-dark">Brand</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {product.additionalInfo?.brand || getBrandName()}
                         </p>
                       </div>
@@ -334,12 +334,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Material */}
                   {product.material && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Material</p>
+                        <p className="text-sm sm:text-base text-dark">Material</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {product.material}
                         </p>
                       </div>
@@ -348,12 +348,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Fit */}
                   {product.additionalInfo?.fit && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Fit</p>
+                        <p className="text-sm sm:text-base text-dark">Fit</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {product.additionalInfo.fit.charAt(0).toUpperCase() + product.additionalInfo.fit.slice(1)} Fit
                         </p>
                       </div>
@@ -362,12 +362,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Gender */}
                   {product.gender && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Gender</p>
+                        <p className="text-sm sm:text-base text-dark">Gender</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {product.gender.charAt(0).toUpperCase() + product.gender.slice(1)}
                         </p>
                       </div>
@@ -376,12 +376,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Season */}
                   {product.season && product.season.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Season</p>
+                        <p className="text-sm sm:text-base text-dark">Season</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {Array.isArray(product.season) ? product.season.join(', ') : product.season}
                         </p>
                       </div>
@@ -390,12 +390,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Made In */}
                   {(product.additionalInfo?.origin || BRAND_CONFIG.country) && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Made In</p>
+                        <p className="text-sm sm:text-base text-dark">Made In</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {product.additionalInfo?.origin || BRAND_CONFIG.country}
                         </p>
                       </div>
@@ -404,12 +404,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Care Instructions */}
                   {product.additionalInfo?.careInstructions && product.additionalInfo.careInstructions.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Care Instructions</p>
+                        <p className="text-sm sm:text-base text-dark">Care Instructions</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {Array.isArray(product.additionalInfo?.careInstructions)
                             ? product.additionalInfo.careInstructions.join(', ')
                             : product.additionalInfo?.careInstructions || 'N/A'
@@ -421,12 +421,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Weight */}
                   {product.weight && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Weight</p>
+                        <p className="text-sm sm:text-base text-dark">Weight</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {product.weight}g
                         </p>
                       </div>
@@ -435,12 +435,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Sustainability */}
                   {product.additionalInfo?.sustainability && product.additionalInfo.sustainability.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Sustainability</p>
+                        <p className="text-sm sm:text-base text-dark">Sustainability</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {Array.isArray(product.additionalInfo?.sustainability)
                             ? product.additionalInfo.sustainability.join(', ')
                             : product.additionalInfo?.sustainability || 'N/A'
@@ -452,12 +452,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Available Sizes */}
                   {product.sizes && product.sizes.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Available Sizes</p>
+                        <p className="text-sm sm:text-base text-dark">Available Sizes</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {Array.isArray(product.sizes) && product.sizes.length > 0
                             ? product.sizes.join(', ').toUpperCase()
                             : 'N/A'
@@ -469,12 +469,12 @@ const ShopDetails: React.FC<ShopDetailsProps> = ({ productId }) => {
 
                   {/* Available Colors */}
                   {product.colors && product.colors.length > 0 && (
-                    <div className="rounded-md even:bg-gray-1 dark:even:bg-gray-700/50 flex py-4 px-4 sm:px-5">
+                    <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                       <div className="max-w-[450px] min-w-[140px] w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">Available Colors</p>
+                        <p className="text-sm sm:text-base text-dark">Available Colors</p>
                       </div>
                       <div className="w-full">
-                        <p className="text-sm sm:text-base text-dark dark:text-gray-200">
+                        <p className="text-sm sm:text-base text-dark">
                           {Array.isArray(product.colors) && typeof product.colors[0] === 'string'
                             ? (product.colors as string[]).join(', ')
                             : (product.colors as Array<{ name: string }>).map(color => color.name).join(', ')
