@@ -99,7 +99,10 @@ const Header = () => {
             {session ? (
               <div className="flex items-center gap-3 relative">
                 <button
-                  onClick={() => setNavigationOpen(!navigationOpen)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setNavigationOpen(!navigationOpen)
+                  }}
                   className="flex items-center gap-2 hover:opacity-80 transition-opacity"
                 >
                   <div className="relative">
@@ -183,11 +186,12 @@ const Header = () => {
             {/* Search Bar */}
             <SearchBar />
 
-            {/* Theme Toggle - Removed */}
-
             {/* Mobile Menu Toggle */}
             <button
-              onClick={() => setNavigationOpen(!navigationOpen)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setNavigationOpen(!navigationOpen);
+              }}
               className="lg:hidden p-2 text-danios-text hover:text-danios-black transition-colors"
             >
               <span className="sr-only">Toggle navigation</span>
@@ -235,7 +239,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </header >
+    </header>
   );
 };
 
