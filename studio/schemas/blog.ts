@@ -90,6 +90,121 @@ export default defineType({
               title: 'Alternative Text',
             }
           ]
+        },
+        {
+          type: 'object',
+          name: 'youtube',
+          title: 'YouTube Video',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'YouTube URL',
+              description: 'Paste full YouTube video URL (e.g., https://www.youtube.com/watch?v=...)',
+              validation: Rule => Rule.required()
+            }
+          ],
+          preview: {
+            select: { url: 'url' },
+            prepare({ url }) {
+              return {
+                title: 'YouTube Video',
+                subtitle: url
+              }
+            }
+          }
+        },
+        {
+          type: 'object',
+          name: 'instagram',
+          title: 'Instagram Post',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'Instagram Post URL',
+              description: 'Paste Instagram post URL (e.g., https://www.instagram.com/p/...)',
+              validation: Rule => Rule.required()
+            }
+          ],
+          preview: {
+            select: { url: 'url' },
+            prepare({ url }) {
+              return {
+                title: 'Instagram Post',
+                subtitle: url
+              }
+            }
+          }
+        },
+        {
+          type: 'object',
+          name: 'facebook',
+          title: 'Facebook Post/Video',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'Facebook URL',
+              description: 'Paste Facebook post or video URL',
+              validation: Rule => Rule.required()
+            }
+          ],
+          preview: {
+            select: { url: 'url' },
+            prepare({ url }) {
+              return {
+                title: 'Facebook Post',
+                subtitle: url
+              }
+            }
+          }
+        },
+        {
+          type: 'object',
+          name: 'twitter',
+          title: 'X (Twitter) Post',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'X/Twitter Post URL',
+              description: 'Paste X (Twitter) post URL',
+              validation: Rule => Rule.required()
+            }
+          ],
+          preview: {
+            select: { url: 'url' },
+            prepare({ url }) {
+              return {
+                title: 'X (Twitter) Post',
+                subtitle: url
+              }
+            }
+          }
+        },
+        {
+          type: 'object',
+          name: 'tiktok',
+          title: 'TikTok Video',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'TikTok Video URL',
+              description: 'Paste TikTok video URL (e.g., https://www.tiktok.com/@username/video/...)',
+              validation: Rule => Rule.required()
+            }
+          ],
+          preview: {
+            select: { url: 'url' },
+            prepare({ url }) {
+              return {
+                title: 'TikTok Video',
+                subtitle: url
+              }
+            }
+          }
         }
       ],
     }),

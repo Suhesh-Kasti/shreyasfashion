@@ -14,12 +14,15 @@ import season from './season'
 import tag from './tag'
 import footerSettings from './footerSettings'
 import searchSettings from './searchSettings'
+import wishlist from './wishlist'
+import blogSettings from './blogSettings'
 
 export const schemaTypes = [
   // Main e-commerce types
   product,
   category,
   order,
+  wishlist,
 
   // Blog content types
   blog,
@@ -39,6 +42,7 @@ export const schemaTypes = [
   siteSettings,
   footerSettings,
   searchSettings,
+  blogSettings,
   material,
   style,
   season,

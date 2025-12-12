@@ -85,8 +85,9 @@ export async function POST(request: NextRequest) {
         adminEmail: process.env.ADMIN_EMAIL || 'admin@daniosfashion.com',
       });
 
-      // Send customer confirmation
-      await sendOrderConfirmationEmail(createdOrder as any, orderData.customer.email);
+      // Redirect to payment proof upload page
+      const redirectUrl = `${process.env.NEXTAUTH_URL}/payment-proof/${createdOrder.orderNumber}`;
+      return NextResponse.redirect(redirectUrl);
 
       console.log('Order notification emails sent successfully');
     } catch (emailError) {

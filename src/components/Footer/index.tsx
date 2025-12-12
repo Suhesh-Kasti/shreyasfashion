@@ -262,7 +262,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/faq">
                   FAQ’s
                 </a>
               </li>

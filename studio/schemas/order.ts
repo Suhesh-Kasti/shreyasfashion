@@ -46,7 +46,7 @@ const orderSchema = {
       initialValue: 'completed',
       validation: (Rule: any) => Rule.required(),
     },
-    
+
     // Customer Information
     {
       name: 'customer',
@@ -256,6 +256,25 @@ const orderSchema = {
       ],
     },
 
+    // Payment Proof (Screenshot)
+    {
+      name: 'paymentProof',
+      title: 'Payment Proof Screenshot',
+      type: 'image',
+      description: 'Screenshot of payment confirmation (for eSewa/Bank Transfer)',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative Text',
+          initialValue: 'Payment Proof',
+        }
+      ],
+    },
+
     // Timestamps
     {
       name: 'orderDate',
@@ -298,7 +317,7 @@ const orderSchema = {
     prepare({ orderNumber, customerName, totalAmount, status, orderDate }: any) {
       const date = orderDate ? new Date(orderDate).toLocaleDateString() : 'Unknown';
       const amount = totalAmount ? `Rs. ${totalAmount.toLocaleString('en-IN')}` : 'Rs. 0';
-      
+
       return {
         title: `Order #${orderNumber}`,
         subtitle: `${customerName} - ${amount} - ${status}`,

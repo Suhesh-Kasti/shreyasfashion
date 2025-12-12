@@ -147,36 +147,164 @@ To send emails from `orders@yourdomain.com` instead of the testing address:
 
 ---
 
-## 🛍️ Sanity Guide (Managing the Store)
+## 🛍️ Sanity Studio Guide (Managing the Store)
 
-**1. Login to the "Back Office"**
--   Run `npm run studio:dev` (or go to `/studio` on your live site).
--   Login with the Google/GitHub account you used for Sanity.
+### What is Sanity Studio?
+Sanity Studio is your **admin dashboard** where you manage all content (products, orders, blog posts, etc.) **without writing code**. Think of it as the "back office" of your store.
 
-**2. Adding a Product**
--   Click **Product** on the left menu.
--   Click **Create (+)**.
--   **Title**: "Men's Summer Shirt".
--   **Slug**: Click "Generate" (creates `mens-summer-shirt`).
--   **Price**: Enter the amount (e.g., `1500`).
--   **Images**: Upload high-quality photos. The first one is the "Main" image.
--   **Sizes list**: Add sizes like "S", "M", "L".
--   **Publish**: Green button at the bottom.
-
-**3. Removing a Product**
--   Click on the product in the list.
--   Click the **down arrow** next to the Publish button.
--   Select **Delete**.
-
-**4. Viewing Orders**
--   Click **Order** on the left menu.
--   You will see a list of all orders.
--   Click one to see:
-    -   Customer Name & Phone.
-    -   Items purchased.
-    -   Payment status.
-    -   Delivery Address.
+### How to Access
+- **Locally**: Run `npm run studio:dev` and visit `http://localhost:3333`
+- **Live**: Visit `https://yoursite.com/studio`
+- Login with the Google/GitHub account you used for Sanity
 
 ---
+
+## 📋 Understanding All Sections
+
+### 🛍️ Products
+**Purpose**: Manage your product catalog
+
+**Sub-sections**:
+- **All Products**: Complete list of every product
+- **Featured Products**: Products marked as "featured" (shown on homepage)
+- **Out of Stock**: Products with inventory = 0
+- **New Arrivals**: Recently added products
+- **Best Sellers**: Popular/featured items
+
+**Common Actions**:
+- **Add Product**: Click Products → Create → Fill in details → Publish
+- **Edit Product**: Click product → Modify → Publish
+- **Delete Product**: Click product → ... menu → Delete
+
+---
+
+### 📂 Categories
+**Purpose**: Organize products into groups (e.g., Shirts, Pants, Accessories)
+
+**Sub-sections**:
+- **All Categories**: All product categories
+- **Featured Categories**: Categories shown prominently on homepage
+
+**How to Use**:
+1. Create a category first (e.g., "T-Shirts")
+2. When adding a product, link it to a category
+
+---
+
+### 📦 Orders
+**Purpose**: View all customer orders - THIS IS WHERE YOU SEE SALES!
+
+**What You'll See**:
+- Customer name, email, phone
+- Items purchased
+- Payment method (eSewa or Cash on Delivery)
+- Payment status (Paid/Pending)
+- Delivery address
+- Order total
+
+**Sub-sections** (filtered views):
+- **All Orders**: Every order placed
+- **Pending**: Orders awaiting confirmation
+- **Confirmed**: Orders you've confirmed
+- **Processing**: Orders being prepared
+- **Shipped**: Orders sent out
+- **Delivered**: Completed orders
+- **eSewa Orders**: Paid via eSewa
+- **Cash on Delivery**: COD orders
+
+**Important**: Orders are automatically created when customers checkout. You just view and manage them here.
+
+---
+
+### 📝 Blog & Content
+**Purpose**: Write blog posts about fashion trends, styling tips, etc.
+
+**Sub-sections**:
+- **All Blog Posts**: Every blog article
+- **Featured Posts**: Highlighted on blog homepage
+- **Draft Posts**: Unpublished articles
+- **Blog Categories**: Organize blogs (e.g., "Style Tips", "News")
+- **Authors**: People who write blogs
+
+---
+
+### 🎯 Marketing & Promotions
+**Purpose**: Create sales, discounts, and special offers
+
+**Sub-sections**:
+- **All Promotions**: Every promotion/sale
+- **Active Promotions**: Currently running sales
+- **Featured Promotions**: Shown prominently
+- **Flash Sales**: Limited-time deals
+- **Seasonal Sales**: Holiday/seasonal promotions
+
+**Example**: Create a "Summer Sale 2025" promotion with 20% off all T-Shirts
+
+---
+
+### 👁️ Product Enhancements
+**Purpose**: Additional features for products
+
+**Sub-sections**:
+- **Quick View Content**: Info shown in product pop-ups
+- **Sellers/Vendors**: If you allow multi-vendor sales
+- **Featured Sellers**: Highlighted vendors
+- **Active Sellers**: Currently active vendors
+
+*(Most stores won't use this section unless you're running a marketplace)*
+
+---
+
+### ⚙️ Configuration
+**Purpose**: Global website settings - **THIS IS IMPORTANT!**
+
+**Sub-sections**:
+- **Site Settings**: Site name, logo, homepage content, hero images
+- **Footer Settings**: ✨ Customize footer links, social media, contact info
+- **Search Settings**: ✨ Quick search links & popular search terms
+- **Materials**: Product materials (Cotton, Polyester, etc.)
+- **Styles**: Product styles (Casual, Formal, etc.)
+- **Seasons**: Season tags (Summer, Winter, etc.)
+- **Tags**: Product tags (Best Seller, New Arrival, etc.)
+
+**How to Customize Footer**:
+1. Go to Configuration → Footer Settings
+2. Edit sections:
+   - Help & Support (address, phone, email)
+   - Quick Links (Privacy, Terms, FAQ, etc.)
+   - Account Links (My Orders, Login, etc.)
+   - Social Media (Facebook, Instagram, TikTok, etc.)
+   - Payment Methods (eSewa, COD icons)
+3. Click Publish
+
+**How to Customize Search**:
+1. Go to Configuration → Search Settings
+2. Add Quick Search links (e.g., "Hoodies" → `/shop-collection?category=hoodies`)
+3. Add Popular Search terms (e.g., "Black", "Oversized")
+4. Click Publish
+
+---
+
+### 📊 Analytics
+**Purpose**: Quick stats about your store
+
+**Sub-sections**:
+- **Sales Overview**: Recent orders
+- **Popular Products**: Best-selling items
+
+*(This is a simplified analytics view. For detailed stats, use Google Analytics or connect a proper analytics tool)*
+
+---
+
+### ➕ Quick Actions
+**Purpose**: Shortcuts to create common items quickly
+
+**Available Actions**:
+- Add New Product
+- Add New Category
+- Create Blog Post
+- Create Promotion
+- Add Seller/Vendor
+- Create Manual Order
 
 

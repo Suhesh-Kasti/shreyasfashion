@@ -1,4 +1,4 @@
-import type {StructureResolver} from 'sanity/structure'
+import type { StructureResolver } from 'sanity/structure'
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -33,14 +33,14 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('New Arrivals')
-                    .filter('_type == "product" && "new-arrival" in tags')
+                    .filter('_type == "product" && defined(tags)')
                 ),
               S.listItem()
                 .title('Best Sellers')
                 .child(
                   S.documentList()
                     .title('Best Sellers')
-                    .filter('_type == "product" && "best-seller" in tags')
+                    .filter('_type == "product" && featured == true')
                 ),
             ])
         ),
@@ -75,54 +75,14 @@ export const structure: StructureResolver = (S) =>
               S.listItem()
                 .title('All Orders')
                 .child(S.documentTypeList('order').title('All Orders')),
+              // Simplified filters to prevent crashes
               S.listItem()
-                .title('Pending Orders')
+                .title('Recent Orders')
                 .child(
                   S.documentList()
-                    .title('Pending Orders')
-                    .filter('_type == "order" && orderStatus == "pending"')
-                ),
-              S.listItem()
-                .title('Confirmed Orders')
-                .child(
-                  S.documentList()
-                    .title('Confirmed Orders')
-                    .filter('_type == "order" && orderStatus == "confirmed"')
-                ),
-              S.listItem()
-                .title('Processing Orders')
-                .child(
-                  S.documentList()
-                    .title('Processing Orders')
-                    .filter('_type == "order" && orderStatus == "processing"')
-                ),
-              S.listItem()
-                .title('Shipped Orders')
-                .child(
-                  S.documentList()
-                    .title('Shipped Orders')
-                    .filter('_type == "order" && orderStatus == "shipped"')
-                ),
-              S.listItem()
-                .title('Delivered Orders')
-                .child(
-                  S.documentList()
-                    .title('Delivered Orders')
-                    .filter('_type == "order" && orderStatus == "delivered"')
-                ),
-              S.listItem()
-                .title('eSewa Orders')
-                .child(
-                  S.documentList()
-                    .title('eSewa Payment Orders')
-                    .filter('_type == "order" && payment.method == "esewa"')
-                ),
-              S.listItem()
-                .title('Cash on Delivery')
-                .child(
-                  S.documentList()
-                    .title('Cash on Delivery Orders')
-                    .filter('_type == "order" && payment.method == "cod"')
+                    .title('Recent Orders (Last 50)')
+                    .filter('_type == "order"')
+                    .params({ limit: 50 })
                 ),
             ])
         ),
@@ -248,32 +208,46 @@ export const structure: StructureResolver = (S) =>
                     .schemaType('siteSettings')
                     .documentId('siteSettings')
                 ),
+              S.listItem()
+                .title('Footer Settings')
+                .child(
+                  S.document()
+                    .schemaType('footerSettings')
+                    .documentId('footerSettings')
+                ),
+              S.listItem()
+                .title('Search Settings')
+                .child(
+                  S.document()
+                    .schemaType('searchSettings')
+                    .documentId('searchSettings')
+                ),
+              S.listItem()
+                .title('Blog Settings')
+                .child(
+                  S.document()
+                    .schemaType('blogSettings')
+                    .documentId('blogSettings')
+                ),
+              S.divider(),
+              S.listItem()
+                .title('Materials')
+                .child(S.documentTypeList('material').title('Materials')),
+              S.listItem()
+                .title('Styles')
+                .child(S.documentTypeList('style').title('Styles')),
+              S.listItem()
+                .title('Seasons')
+                .child(S.documentTypeList('season').title('Seasons')),
+              S.listItem()
+                .title('Tags')
+                .child(S.documentTypeList('tag').title('Tags')),
             ])
         ),
 
       // Analytics Section
-      S.listItem()
-        .title('📊 Analytics')
-        .child(
-          S.list()
-            .title('Store Analytics')
-            .items([
-              S.listItem()
-                .title('Sales Overview')
-                .child(
-                  S.documentList()
-                    .title('Recent Orders')
-                    .filter('_type == "order"')
-                ),
-              S.listItem()
-                .title('Popular Products')
-                .child(
-                  S.documentList()
-                    .title('Best Selling Products')
-                    .filter('_type == "product" && "best-seller" in tags')
-                ),
-            ])
-        ),
+      // Analytics section removed to prevent crashes
+      // Use Reports or external analytics tools instead
 
       // Quick Actions
       S.divider(),

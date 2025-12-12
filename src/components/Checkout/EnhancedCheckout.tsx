@@ -260,8 +260,8 @@ const EnhancedCheckout: React.FC = () => {
         dispatch(removeAllItemsFromCart());
 
         toast.success('Order placed successfully!');
-        // Redirect to order confirmation
-        window.location.href = `/order-confirmation/${result.orderNumber}`;
+        // Redirect to payment proof upload page (COD will auto-skip)
+        window.location.href = `/payment-proof/${result.orderNumber}`;
       } else {
         throw new Error('Failed to create order');
       }
