@@ -157,8 +157,8 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
                   {quickLinks.map((link, index) => (
                     <Link
                       key={index}
-                      href={link.url}
-                      className="block text-sm text-danios-text hover:text-danios-black transition-colors"
+                      href={link.url.startsWith('/') ? link.url : `/shop-collection?search=${encodeURIComponent(link.label)}`}
+                      className="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700"
                       onClick={() => setIsOpen(false)}
                     >
                       {link.label}

@@ -299,6 +299,13 @@ const orderSchema = {
       description: 'Internal notes for order processing',
     },
     {
+      name: 'orderNotes',
+      title: 'Order Notes (Customer)',
+      type: 'text',
+      rows: 3,
+      description: 'Customer notes provided during checkout',
+    },
+    {
       name: 'trackingNumber',
       title: 'Tracking Number',
       type: 'string',
@@ -322,7 +329,6 @@ const orderSchema = {
         title: `Order #${orderNumber}`,
         subtitle: `${customerName} - ${amount} - ${status}`,
         description: `Ordered on ${date}`,
-        media: '🛍️',
       }
     },
   },

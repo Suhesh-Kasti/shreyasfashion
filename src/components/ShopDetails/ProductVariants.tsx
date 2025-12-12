@@ -192,9 +192,9 @@ export default function ProductVariants({
               +
             </button>
           </div>
-          <div className="flex items-center space-x-2">
-            <div className={`w-2 h-2 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`}></div>
-            <span className={`text-sm font-medium ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
+          <div className="mb-6">
+            <span className="text-sm text-gray-600">Availability: </span>
+            <span className={`font-medium ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
               {product.inStock ? 'In Stock' : 'Out of Stock'}
             </span>
           </div>

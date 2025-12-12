@@ -305,6 +305,4 @@ Sanity Studio is your **admin dashboard** where you manage all content (products
 - Create Blog Post
 - Create Promotion
 - Add Seller/Vendor
-- Create Manual Order
-
-
+- Create Manual Orders

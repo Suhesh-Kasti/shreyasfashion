@@ -1,13 +1,21 @@
-export default {
+const materialSchema = {
     name: 'material',
-    title: 'Material',
+    title: 'Materials',
     type: 'document',
     fields: [
         {
-            name: 'title',
-            title: 'Title',
+            name: 'name',
+            title: 'Material Name',
             type: 'string',
             validation: (Rule: any) => Rule.required(),
-        }
-    ]
-}
+        },
+        {
+            name: 'description',
+            title: 'Description',
+            type: 'text',
+            rows: 3,
+        },
+    ],
+};
+
+export default materialSchema;
