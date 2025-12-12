@@ -1,28 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeClient } from '../../../../../lib/sanity';
+import { client, writeClient } from '../../../../../lib/sanity';
 
 export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
         const file = formData.get('file') as File;
-        const orderId = formData.get('orderId') as string;
+        const orderNumber = formData.get('orderId') as string;
 
-        if (!file || !orderId) {
+        if (!file || !orderNumber) {
             return NextResponse.json(
                 { success: false, error: 'File and order ID are required' },
                 { status: 400 }
             );
         }
 
+        // Find order _id by orderNumber
+        const order = await client.fetch(
+            `*[_type == "order" && orderNumber == $orderNumber][0]{ _id }`,
+            { orderNumber }
+        );
+
+        if (!order) {
+            return NextResponse.json(
+                { success: false, error: 'Order not found' },
+                { status: 404 }
+            );
+        }
+
         // Upload image to Sanity
         const buffer = Buffer.from(await file.arrayBuffer());
         const imageAsset = await writeClient.assets.upload('image', buffer, {
-            filename: `payment-proof-${orderId}.${file.name.split('.').pop()}`
+            filename: `payment-proof-${orderNumber}.${file.name.split('.').pop()}`
         });
 
-        // Update order with payment proof
+        // Update order with payment proof using _id
         await writeClient
-            .patch(orderId)
+            .patch(order._id)
             .set({
                 paymentProof: {
                     _type: 'image',
