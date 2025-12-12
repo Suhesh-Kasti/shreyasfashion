@@ -16,6 +16,7 @@ import footerSettings from './footerSettings'
 import searchSettings from './searchSettings'
 import wishlist from './wishlist'
 import blogSettings from './blogSettings'
+import deliverySettings from './deliverySettings'
 
 export const schemaTypes = [
   // Main e-commerce types
@@ -43,6 +44,7 @@ export const schemaTypes = [
   footerSettings,
   searchSettings,
   blogSettings,
+  deliverySettings,
   material,
   style,
   season,

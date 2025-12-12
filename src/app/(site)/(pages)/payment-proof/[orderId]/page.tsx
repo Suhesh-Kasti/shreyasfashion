@@ -53,27 +53,25 @@ export default function PaymentProofPage({ params }: PaymentProofPageProps) {
 
         setUploading(true);
         try {
-            const imageAsset = await client.assets.upload('image', selectedFile, {
-                filename: `payment-proof-${orderId}.${selectedFile.name.split('.').pop()}`
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            formData.append('orderId', orderId);
+
+            const response = await fetch('/api/payment-proof/upload', {
+                method: 'POST',
+                body: formData,
             });
 
-            await client
-                .patch(orderId)
-                .set({
-                    paymentProof: {
-                        _type: 'image',
-                        asset: {
-                            _type: 'reference',
-                            _ref: imageAsset._id
-                        }
-                    }
-                })
-                .commit();
+            const result = await response.json();
 
-            router.push(`/order-confirmation/${orderId}`);
+            if (result.success) {
+                router.push(`/order-confirmation/${orderId}`);
+            } else {
+                throw new Error(result.error || 'Upload failed');
+            }
         } catch (error) {
             console.error('Upload failed:', error);
-            alert('Failed to upload payment proof. Please try again.');
+            alert(`Failed to upload: ${error instanceof Error ? error.message : 'Please try again'}`);
         } finally {
             setUploading(false);
         }
