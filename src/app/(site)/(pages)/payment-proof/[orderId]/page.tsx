@@ -162,7 +162,13 @@ export default function PaymentProofPage({ params }: PaymentProofPageProps) {
                         <button
                             onClick={handleUpload}
                             disabled={!selectedFile || uploading}
-                            className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition text-sm sm:text-base"
+                            style={{
+                                backgroundColor: selectedFile && !uploading ? '#2563eb' : '#d1d5db',
+                                color: 'white',
+                                opacity: 1,
+                                visibility: 'visible'
+                            }}
+                            className="flex-1 py-3 px-6 rounded-md font-semibold hover:bg-blue-700 disabled:cursor-not-allowed transition text-sm sm:text-base"
                         >
                             {uploading ? 'Uploading...' : 'Upload & Continue'}
                         </button>
