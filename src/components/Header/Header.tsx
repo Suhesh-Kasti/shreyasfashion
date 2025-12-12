@@ -119,6 +119,9 @@ const Header = () => {
                   <p className="text-sm font-medium text-danios-text">
                     {session.user?.name || "User"}
                   </p>
+                  <Link href="/my-orders" className="text-xs text-blue-600 hover:text-blue-800 absolute top-4 left-0 w-[max-content]">
+                    My Orders
+                  </Link>
                 </div>
                 <button
                   onClick={() => signOut()}
@@ -209,7 +212,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </header>
+    </header >
   );
 };
 
