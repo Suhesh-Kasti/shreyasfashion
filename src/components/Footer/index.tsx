@@ -213,27 +213,27 @@ const Footer = () => {
 
             <ul className="flex flex-col gap-3.5">
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
-                  My Account
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/my-orders">
+                  My Orders
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/signin">
                   Login / Register
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/cart">
                   Cart
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/wishlist">
                   Wishlist
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/shop-collection">
                   Shop
                 </a>
               </li>
@@ -252,7 +252,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/refund-policy">
                   Refund Policy
                 </a>
               </li>
@@ -267,7 +267,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="#">
+                <a className="ease-out duration-200 hover:text-blue text-brand-text" href="/contact">
                   Contact
                 </a>
               </li>

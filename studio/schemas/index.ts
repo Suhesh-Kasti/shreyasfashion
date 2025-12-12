@@ -12,6 +12,8 @@ import material from './material'
 import style from './style'
 import season from './season'
 import tag from './tag'
+import footerSettings from './footerSettings'
+import searchSettings from './searchSettings'
 
 export const schemaTypes = [
   // Main e-commerce types
@@ -35,6 +37,8 @@ export const schemaTypes = [
 
   // Configuration types
   siteSettings,
+  footerSettings,
+  searchSettings,
   material,
   style,
   season,

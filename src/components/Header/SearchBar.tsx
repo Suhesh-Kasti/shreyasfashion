@@ -7,13 +7,47 @@ interface SearchBarProps {
   className?: string;
 }
 
+interface QuickSearchLink {
+  label: string;
+  url: string;
+}
+
 const SearchBar = ({ className = "" }: SearchBarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [quickLinks, setQuickLinks] = useState<QuickSearchLink[]>([]);
+  const [popularTerms, setPopularTerms] = useState<string[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  // Fetch search settings from Sanity
+  useEffect(() => {
+    const fetchSearchSettings = async () => {
+      try {
+        const response = await fetch('/api/search-settings');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.settings) {
+            setQuickLinks(data.settings.quickSearch || []);
+            setPopularTerms(data.settings.popularSearches || []);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch search settings:', error);
+        // Use default values as fallback
+        setQuickLinks([
+          { label: "Sweatshirts", url: "/shop-collection?category=sweatshirts" },
+          { label: "T-Shirts", url: "/shop-collection?category=tshirts" },
+          { label: "Pants", url: "/shop-collection?category=pants" }
+        ]);
+        setPopularTerms(["Premium Cotton", "Oversized", "Black", "Minimalist"]);
+      }
+    };
+
+    fetchSearchSettings();
+  }, []);
 
   // Close search when clicking outside
   useEffect(() => {
@@ -114,55 +148,48 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
             </form>
 
             {/* Quick Links */}
-            <div className="mt-4 pt-4 border-t border-danios-neutral-2">
-              <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
-                Quick Search
-              </p>
-              <div className="space-y-2">
-                <Link
-                  href="/shop-collection?category=sweatshirts"
-                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Sweatshirts
-                </Link>
-                <Link
-                  href="/shop-collection?category=tshirts"
-                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  T-Shirts
-                </Link>
-                <Link
-                  href="/shop-collection?category=pants"
-                  className="block text-sm text-danios-text hover:text-danios-black transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Pants
-                </Link>
+            {quickLinks.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-danios-neutral-2">
+                <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
+                  Quick Search
+                </p>
+                <div className="space-y-2">
+                  {quickLinks.map((link, index) => (
+                    <Link
+                      key={index}
+                      href={link.url}
+                      className="block text-sm text-danios-text hover:text-danios-black transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Popular Searches */}
-            <div className="mt-4 pt-4 border-t border-danios-neutral-2">
-              <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
-                Popular
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Premium Cotton", "Oversized", "Black", "Minimalist"].map((term) => (
-                  <button
-                    key={term}
-                    onClick={() => {
-                      setSearchQuery(term);
-                      handleSearch({ preventDefault: () => { } } as React.FormEvent);
-                    }}
-                    className="px-3 py-1 text-xs bg-danios-neutral text-danios-text hover:bg-danios-neutral-2 transition-colors rounded-full"
-                  >
-                    {term}
-                  </button>
-                ))}
+            {popularTerms.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-danios-neutral-2">
+                <p className="text-sm text-danios-text-muted mb-3 uppercase tracking-wider">
+                  Popular
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {popularTerms.map((term, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setSearchQuery(term);
+                        handleSearch({ preventDefault: () => { } } as React.FormEvent);
+                      }}
+                      className="px-3 py-1 text-xs bg-danios-neutral text-danios-text hover:bg-danios-neutral-2 transition-colors rounded-full"
+                    >
+                      {term}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )
